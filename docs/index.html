@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spec-Driven Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style data-src="method.css">
+/* GENERATED from docs/method.css - do not edit here.
+   Edit method.css and run scripts/build-site.sh */
+/* =============================================================
+   T-Gency method reference — one content width, one call-out.
+   The width is set by the grid column, not per element, so prose,
+   cards, tables and rules share the same left and right edge.
+   ============================================================= */
+:root{
+  --bg:#08080A; --panel:#121218; --panel2:#16161D;
+  --line:#232330; --line2:#2E2E3D;
+  --tx:#E8E8F0; --tx2:#A0A0B4; --tx3:#6E6E85;
+  --purple:#8B5CF6; --blue:#3B82F6; --cyan:#22D3EE; --green:#A3E635;
+  --red:#F0506E; --amber:#F5A524;
+  --grad:linear-gradient(90deg,var(--purple),var(--blue),var(--green));
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:15.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{display:grid;grid-template-columns:236px minmax(0,1fr);max-width:1560px;margin:0 auto}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;height:100vh;overflow-y:auto;padding:28px 14px 40px;border-right:1px solid var(--line)}
+.brand{font-size:19px;font-weight:700;letter-spacing:-.02em}
+.brand span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand em{font-style:normal;color:var(--green)}
+.brandsub{font-size:11px;color:var(--tx3);letter-spacing:.09em;text-transform:uppercase;margin:2px 0 24px}
+nav a{display:block;padding:6px 10px;border-radius:6px;font-size:13.5px;color:var(--tx2);text-decoration:none}
+nav a:hover{background:var(--panel);color:var(--tx)}
+.navgrp{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--tx3);margin:20px 0 6px 10px;font-weight:600}
+nav .ext{font-size:12.5px;color:var(--tx3)}
+nav .ext:hover{color:var(--tx)}
+
+/* ---------- type ---------- */
+main{padding:0 44px 110px 46px;min-width:0}
+section{padding-top:52px;scroll-margin-top:12px}
+h1{font-size:33px;line-height:1.15;letter-spacing:-.025em;margin:0 0 10px;font-weight:700}
+h2{font-size:22px;letter-spacing:-.02em;margin:0 0 14px;font-weight:600;display:flex;align-items:center;gap:11px}
+h2::before{content:"";width:3px;height:19px;border-radius:2px;background:var(--grad);flex:none}
+h3{font-size:16px;margin:28px 0 8px;font-weight:600;letter-spacing:-.01em}
+h4{font-size:12.5px;margin:0 0 8px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--tx2)}
+p{margin:0 0 13px;color:var(--tx2);line-height:1.72}
+.lead{font-size:16.5px}
+.sub{font-size:14px;color:var(--tx3);margin:-6px 0 18px}
+ul{margin:0 0 14px;padding-left:19px;color:var(--tx2)}
+li{margin:6px 0;line-height:1.72}
+strong,b{color:var(--tx);font-weight:600}
+a{color:var(--cyan)}
+code{font:12.5px var(--mono);background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--cyan);border:1px solid var(--line)}
+hr{border:0;border-top:1px solid var(--line);margin:42px 0 0}
+/* the grid column owns the measure, not the element */
+main p,main ul,main ol,main li,main div,main table,main section,main hr,
+main header,main h1,main h2,main h3,main h4,footer{max-width:none}
+
+/* ---------- header ---------- */
+header{padding:44px 0 28px;border-bottom:1px solid var(--line)}
+.meta{display:flex;gap:22px;flex-wrap:wrap;font-size:12.5px;color:var(--tx3);margin-top:18px}
+.meta b{color:var(--tx2);font-weight:500}
+
+/* ---------- the one call-out ----------
+   There used to be five frames. Five frames make a reader think each
+   one is a different kind of information, when the argument simply
+   continues. Two formats in the whole document: plain text, and this. */
+.card,.note{
+  background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  padding:16px 18px;margin:14px 0;font-size:14px;color:var(--tx2)
+}
+.card h4,.note h4{
+  margin:0 0 9px;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--tx3);font-weight:700
+}
+.card p:last-child,.card ul:last-child,.note p:last-child{margin-bottom:0}
+.card b,.note b{color:var(--tx)}
+/* the closing line of a call-out: same frame, less weight */
+.card .src,.note .src{font-size:12.5px;color:var(--tx3);margin-top:10px;margin-bottom:0}
+.src{font-size:11.5px;color:var(--tx3)}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:11px;background:var(--panel);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);font-weight:600;padding:12px 13px 8px;border-bottom:1px solid var(--line2);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--tx2);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:0}
+td p,td ul{max-width:none}
+
+/* ---------- inline status ---------- */
+.pill{display:inline-flex;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:20px;border:1px solid;white-space:nowrap}
+.p-red{color:#FF8FA3;border-color:#5C1F2E;background:#2A0F17}
+.p-amb{color:#FFC978;border-color:#5C4318;background:#2A1F0C}
+.p-blu{color:#8FC5FF;border-color:#1E3A5C;background:#0D1B2A}
+.p-gry{color:var(--tx2);border-color:var(--line2);background:var(--panel2)}
+.p-pur{color:#C4A8FF;border-color:#3D2A5C;background:#190F2A}
+.yes{color:var(--green)}.no{color:var(--red)}.part{color:var(--amber)}
+
+/* ---------- checked list ---------- */
+.tick{list-style:none;padding:0;margin:0 0 6px}
+.tick li{padding-left:20px;position:relative;margin:6px 0;font-size:14px}
+.tick li::before{position:absolute;left:0;font-weight:700}
+.tick li.y::before{content:"\2713";color:var(--green)}
+.tick li.p::before{content:"~";color:var(--amber);font-size:16px;top:-2px}
+.tick li.n::before{content:"\2715";color:var(--red);font-size:12px;top:2px}
+
+/* ---------- chain / code block ---------- */
+.chain{font:12.5px/1.9 var(--mono);color:var(--tx2);margin:0}
+.chain code{background:none;border:0;padding:0}
+
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--tx3)}
+footer .met{margin-top:10px;font-size:11.5px;line-height:1.8}
+footer .met b{color:var(--tx2);font-weight:500}
+
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  main{padding:0 20px 80px}
+  h1{font-size:26px}
+}
+</style>
+</head><body>
+<div class="wrap">
+<nav>
+  <div class="brand">T-Gency <em>&#9654;</em> Method</div>
+  <div class="brandsub">Spec-Driven Development</div>
+
+  <div class="navgrp">Sections</div>
+  <a href="#why">1 &middot; Why</a>
+  <a href="#documents">2 &middot; The three documents</a>
+  <a href="#traceability">3 &middot; Traceability</a>
+  <a href="#adopting">4 &middot; Adopting it</a>
+  <a href="#toolkit">5 &middot; Plugins and skills</a>
+  <a href="#loop">6 &middot; The delivery loop</a>
+  <a href="#branching">7 &middot; Branching and PRs</a>
+  <a href="#docs">8 &middot; The docs system</a>
+  <a href="#standard">9 &middot; Our issue standard</a>
+
+  <div class="navgrp">Also here</div>
+  <a class="ext" href="quickstart.html">0 &middot; Quickstart &rarr;</a>
+  <a class="ext" href="talk-outline.html">Talk outline &rarr;</a>
+  <a class="ext" href="skills.html">Security skills &rarr;</a>
+  <a class="ext" href="seeds.html">Document seeds &rarr;</a>
+</nav>
+<main>
+<header>
+  <h1>Spec-Driven Development</h1>
+  <p class="lead">Writing the specification before the code, and keeping the two tied together afterwards. Three documents per feature, and an ID system that lets a tool walk from a requirement to the line of code that satisfies it.</p>
+  <div class="meta">
+    <span><b>Methodology</b> engineering-methodology v0.15.0</span>
+    <span><b>Install</b> <code>/plugin marketplace add t-gency/spec-driven-development</code></span>
+    <span><b>New here?</b> <a href="quickstart.html">Start with the quickstart</a></span>
+    <span><b>Revised</b> September 2026</span>
+  </div>
+</header>
+
+<section id="why"><h2>1 &middot; Why</h2>
+<p class="sub">The problem it solves, and why the old answer failed.</p>
+
+<p>A team decides to build something. Someone writes a ticket. A developer reads it, fills the gaps with assumptions, and ships. Three weeks later nobody can answer, without opening the code, three basic questions:</p>
+
+<ul>
+  <li><b>Was this decided, or did someone assume it?</b></li>
+  <li><b>Is the code doing what we agreed, or what was convenient?</b></li>
+  <li><b>If we change this, what breaks?</b></li>
+</ul>
+
+<p>The ticket cannot answer them. It was a task, not a decision record, and it closed. The usual patch is more documentation, and it fails for a specific reason: <b>the documentation is not connected to anything.</b> Nothing breaks when it goes stale, so it goes stale, and then nobody reads it.</p>
+
+<div class="card">
+  <h4>Specs are not a new idea. They died once.</h4>
+  <p>And the reason matters: the spec went stale the moment coding started, and nobody could afford to keep it current. Two things changed since.</p>
+  <ul>
+    <li><b>An agent can write most of the document.</b> Cost per spec drops from days to hours.</li>
+    <li><b>An agent can also audit the code against it.</b> That closes the loop that was always missing.</li>
+  </ul>
+  <p class="src">The second point is the real one. Writing was never the hard part; verifying was. That is what got cheap.</p>
+</div>
+
+<p><b>What this is not.</b> Not a template pack, and not a phase gate to satisfy an auditor. A team that adopts the three documents and skips the traceability gets the ceremony without the benefit: three more files to maintain and nothing checking them. Section 3 is the part that pays for the other two.</p>
+</section>
+
+<hr class="div">
+<section id="documents"><h2>2 &middot; The three documents</h2>
+<p class="sub">One set per feature. Not per epic, not per release, not per ticket.</p>
+
+<div class="scroll"><table>
+<thead><tr><th>Document</th><th>Answers</th><th>Voice</th><th>Length</th></tr></thead>
+<tbody>
+<tr><td><b>Concept Note</b></td><td>Why, and in what direction</td><td>Divergent, exploratory</td><td>2,500&ndash;6,000 words</td></tr>
+<tr><td><b>Spec</b></td><td>What it must do, how it must behave</td><td>Normative: every line an obligation</td><td>4,000&ndash;10,000 words</td></tr>
+<tr><td><b>Implementation Plan</b></td><td>What to build, where, in what order</td><td>Executable</td><td>8,000&ndash;25,000 words, by branch arc</td></tr>
+</tbody></table></div>
+
+<p>Each document stands on its own, and any stage can be reconstructed from its neighbours. That is a real test: <b>if your Spec cannot be turned into a plan without a meeting, it is underspecified.</b></p>
+
+<div class="card">
+  <h4>The bands count the delivered document, scaffolding included</h4>
+  <p>That matters, because the scaffolding is not small. The Spec template carries <b>~3,900 words of normative structure before a single placeholder is filled</b>, and &sect;11.5's meta-acceptance-criteria alone contribute ~1,100 words that must survive into the delivered document. A conforming Spec cannot be shorter than its own template.</p>
+  <p>The earlier band said 1,500&ndash;3,500. It predated the traceability layer and was arithmetically impossible to meet. Worth saying out loud, because <b>a limit the templates violate teaches people to ignore limits.</b></p>
+  <p>The Plan does not get one number, because its size is set by the <b>branch arc</b> it declares in &sect;7.0 &mdash; the nine per-branch subsections and the closing <code>T-N.D1</code>&ndash;<code>T-N.D20</code> block are replicated per branch:</p>
+  <div class="scroll"><table>
+  <thead><tr><th>Arc</th><th>Band</th></tr></thead>
+  <tbody>
+  <tr><td><code>refactor-1</code>, <code>single-branch</code></td><td>8,000&ndash;12,000 words</td></tr>
+  <tr><td><code>two-branch-backend-ui</code></td><td>10,000&ndash;16,000 words</td></tr>
+  <tr><td><code>three-branch-scaffold-core-rollout</code></td><td>12,000&ndash;19,000 words</td></tr>
+  <tr><td><code>five-branch-default</code>, <code>migration-5</code></td><td>15,000&ndash;25,000 words</td></tr>
+  </tbody></table></div>
+  <p class="src">The upper bounds still carry a rule: <b>if a document runs past its band, split the feature</b> &mdash; except for the Plan, where you check the arc first. An oversized Plan is more often a five-branch arc on a two-branch feature than a feature that needs splitting.</p>
+</div>
+
+<div class="card">
+  <h4>The difference a Spec makes</h4>
+  <p><span class="no">&#10007;</span> <i>The system must be fast.</i></p>
+  <p><span class="yes">&#10003;</span> <i>The system shall return search results within 300 ms at p95 for datasets under 10,000 records.</i></p>
+  <p class="src">Which one can be violated? Only the second. A requirement that cannot be violated is not a requirement.</p>
+</div>
+
+<p><b>Each document answers a question the next one is not allowed to reopen.</b> The Concept Note ends by splitting decisions into <i>settled: do not relitigate</i> and <i>decide in the Spec</i>. The Spec does the same toward the Plan. That is the whole mechanism against the most common failure in this work: relitigating a decision three stages downstream, in a code review, with none of the context that produced it.</p>
+
+<p><b>Two rules hold the set together.</b> <b>Cite, don't paraphrase:</b> when the Spec inherits a decision it writes <code>D-01</code>, not a re-worded version. <b>Empty is legal; silent is not:</b> any section can be empty, but it must say so and why &mdash; <i>Security constraints: none &mdash; see Concept &sect;5.2</i>. That single rule turns "we forgot" and "we decided not to" into visibly different things.</p>
+</section>
+
+<hr class="div">
+<section id="traceability"><h2>3 &middot; Traceability</h2>
+<p class="sub">The part that makes it work. Without this, the three documents are ceremony.</p>
+
+<p>Every obligation gets an ID, and the IDs form a chain that runs from a decision to a line of code:</p>
+
+<div class="card">
+  <p class="chain"><code>D-01</code> a decision in the Concept Note<br>
+  &nbsp;&nbsp;&#8627; <code>TC-002</code> becomes a constraint in the Spec<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&#8627; <code>FR-003</code> which a requirement must respect<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8627; <code>S-04</code> which a scenario exercises<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8627; a test tagged <code>S-04</code><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8627; the code that makes it pass</p>
+  <p class="src">The bottom two links are what make the rest real.</p>
+</div>
+
+<p><b>The scenario ID is embedded in the test itself</b>, in the test name or a native tag &mdash; <code>@pytest.mark.scenario("S-04")</code>, <code>it("S-04: recovers the partial turn&hellip;")</code>. Not a table in a wiki mapping tests to requirements: a table is a second thing to maintain, and the second thing always rots. A tag in the test file moves with the test, gets deleted with the test, and can be grepped.</p>
+
+<p>Once the IDs are in the documents and in the tests, a tool walks every obligation in the Spec and gives each one exactly one verdict:</p>
+
+<div class="scroll"><table>
+<thead><tr><th>Verdict</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><span class="pill p-blu">IMPLEMENTED</span></td><td>The code satisfies it, and here is the file and line</td></tr>
+<tr><td><span class="pill p-amb">PARTIAL</span></td><td>Half of it is there; here is which half is missing</td></tr>
+<tr><td><span class="pill p-red">ABSENT</span></td><td>Nothing satisfies it, and here is where it would live</td></tr>
+<tr><td><span class="pill p-red">DIVERGENT</span></td><td>The code contradicts it</td></tr>
+<tr><td><span class="pill p-gry">UNVERIFIABLE</span></td><td>It could not be checked, and here is why</td></tr>
+</tbody></table></div>
+
+<p><b><code>UNVERIFIABLE</code> ranks above <code>ABSENT</code> on purpose:</b> "I could not check" must never be reported as "it is not there." That distinction is what makes the report trustworthy enough to act on.</p>
+
+<p>The audit also runs backwards, looking for public behaviour in the code that <b>no ID sanctions</b>. That is usually the more interesting direction: code nobody specified is either a missing requirement or scope that crept in, and both are worth knowing before someone builds on top of it.</p>
+
+<div class="card">
+  <h4>Two rules keep the audit honest</h4>
+  <p><b>Prose is a claim; code is evidence.</b> Documentation, comments, commit messages, PR descriptions and test names are claims about behaviour. Only the implementation is evidence. A comment that says <code>// validates the token</code> is not proof that a token is validated.</p>
+  <p><b>A gate passing is not proof.</b> A failing check is evidence of a gap; a passing check is only evidence that the check passed. A test that asserts nothing, a test whose subject is mocked away, a code path nothing reaches &mdash; all of these pass.</p>
+  <p class="src">Nothing here is technically hard. It did not happen before because the labour was absurd: keeping IDs consistent across three documents and re-verifying the set on every change is weeks of a person's attention per feature, forever. An agent does that pass in minutes, repeatedly, without getting bored on obligation forty-seven.</p>
+</div>
+</section>
+
+<hr class="div">
+<section id="adopting"><h2>4 &middot; Adopting it</h2>
+<p class="sub">The methodology says nothing about tickets. Four questions every team has to answer itself.</p>
+
+<h3>1 &middot; What is the unit?</h3>
+<p class="sub">our answer: the title carries it</p>
+<p>The methodology works one feature at a time; a board works in tickets. You need a name that means the same on both sides. Ours lives in the ticket title: <code>Surface | Feature &rarr; Name</code>. The middle segment is the feature, and it names the <code>specs/NNN-feature/</code> folder. 53 tickets resolved to 18 features. Without something like this, "which tickets belong to this Spec?" has no mechanical answer and the connection is maintained by memory.</p>
+
+<div class="card">
+  <h4>How many tickets per feature</h4>
+  <p><b>One per independently deliverable user story.</b> Not one per feature, and not one per functional requirement.</p>
+  <p>That is <a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">spec-kit</a>'s rule and it is the right one: stories are prioritized <code>P1</code> <code>P2</code> <code>P3</code>, each independently testable, and <b><code>P1</code> alone has to be viable</b>. If you build only that story you still have something worth shipping. That constraint is what prevents a monolithic all-or-nothing spec.</p>
+  <ul>
+    <li><b>Counting FRs is wrong.</b> A requirement is an obligation inside the Spec, not a unit of work. One story spans several FRs, and one FR can serve several stories</li>
+    <li><b>One ticket per feature is wrong too.</b> It hides the priority order inside the ticket, so nothing can be cut. A feature with three stories has three tickets, and you can drop the third</li>
+  </ul>
+  <p class="src"><b>The ticket and the PR are different axes.</b> The ticket slices by user value, vertically: independently deliverable, prioritized. The PR slices by technical sequencing, horizontally: the Plan's branch arc. One ticket can take several stacked PRs; several tickets never share one.</p>
+</div>
+
+<h3>2 &middot; How does a ticket point at its documents?</h3>
+<p class="sub">two fields in the body</p>
+<p><code>Docs:</code> the feature folder. <code>Satisfies:</code> the Spec IDs the ticket closes. Bugs carry <code>Violates</code> instead: which IDs the current behaviour contradicts, which is the same thing the audit reports as <code>DIVERGENT</code>. If no ID sanctions the behaviour the value is <code>unspecified</code> &mdash; and that is a gap in the Spec, not just a bug. This is the entire bridge.</p>
+
+<h3>3 &middot; Where do the tasks live?</h3>
+<p class="sub">not on the board</p>
+<p>The Plan carries a task checklist meant for an agent. Pushing those onto the board gives you two task systems that drift within a sprint. The ticket is what a person picks up &mdash; owner, label, board column; the plan's tasks are the breakdown for whoever executes, and they stay in the document.</p>
+
+<h3>4 &middot; What earns the full treatment?</h3>
+<p class="sub">the hardest one</p>
+<p>The methodology gives no criterion for when <i>not</i> to use it. We derived ours from what blocks each ticket: a platform contract runs nothing, a pending decision runs the Concept Note only, a missing spec runs Concept plus Spec, and everything else takes the direct path. Result: <b>the full pipeline on 2 or 3 features out of 18</b>.</p>
+
+<div class="card">
+  <h4>The honest cost</h4>
+  <p><b>Between 15,000 and 40,000 words per feature</b> across the three documents, plus real calendar time to write and review them. That is a larger number than this material used to state; the old figure predated the traceability layer and did not survive contact with the templates. Too much for most work, and pretending otherwise is how this gets abandoned: a bug fix does not get a Concept Note, a copy change does not get a Spec.</p>
+  <p><b>A team that runs this on everything will quietly stop running it on anything.</b></p>
+  <p class="src">It also does not apply when the problem is not understood yet (do discovery first: a Spec written over a guess just makes the guess look official), when the thing is genuinely throwaway, or when nobody will ever run the audit. Without the audit you are buying the cost without the benefit.</p>
+</div>
+
+<p><b>A spec nobody verifies decays into fiction. A spec that gets audited is a contract. The only thing that changed is that auditing got cheap.</b></p>
+
+<div class="card">
+  <h4>The gates nobody hands you</h4>
+  <p><b>What "approved" means.</b> Every template ships as <code>Draft</code> and nothing promotes it. The methodology gives the criteria for <i>not</i> approvable &mdash; unresolved questions at requirement level, empty cells in the coverage matrix, blocking review findings &mdash; but the act of approving is yours to define. Ours takes four signatures, recorded in the document's own change log: Product, the surface's tech lead, testing, design.</p>
+  <p><b>The same feature in two codebases.</b> The methodology assumes one feature, one repo. A product with several clients against one platform breaks that immediately. We keep the documents in each app's repo and have the headers point across at each other, so a change on one side makes the stale side visible. It works, and it runs on human discipline: nothing mechanical enforces it.</p>
+</div>
+
+<p><b>Order of adoption.</b> Pick the naming bridge first, before writing any document: it is cheap now and expensive to retrofit across a live board. Then add the two body fields to your ticket templates, even empty. Then run the full pipeline on <b>one</b> feature: the most expensive one you have, not the easiest &mdash; an easy feature will not surface the problems. Only then decide the tiering, when the cost is a number instead of a guess. And <b>run the audit before the second feature</b>: if nobody ever runs it, stop there, because the rest is documentation theatre and a good ticket is cheaper.</p>
+</section>
+
+
+<hr class="div">
+<section id="toolkit"><h2>5 &middot; Plugins and skills</h2>
+<p class="sub">What the difference is, and how to install them.</p>
+
+<p>A <b>skill</b> is a folder of instructions that teaches an agent to do one job well. A <b>plugin</b> is the package that ships a set of skills together, versioned, so a team installs them with one command. <b>Skill is the capability; plugin is the delivery mechanism.</b> You never install a skill on its own.</p>
+
+<p>A skill is a <code>SKILL.md</code> whose front matter names it and describes when it applies. <b>That description is not documentation: it is the routing table.</b> The agent reads every installed skill's description and loads the one that matches what you asked, which is why you invoke a skill in plain language and never type its name &mdash; and why a vague description means the wrong skill loads, or none does. When a skill misfires, its description is usually the bug, not its instructions.</p>
+
+<div class="scroll"><table>
+<thead><tr><th>Stage</th><th>Skill</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td>Author</td><td><code>staged-engineering-doc</code></td><td>Writes or derives any of the three documents, through guided Q&amp;A plus codebase research</td></tr>
+<tr><td>Present</td><td><code>three-p-visualizer</code></td><td>Renders a feature as a Product / Process / Project explainer</td></tr>
+<tr><td>Query</td><td><code>spec-answers</code></td><td>Answers questions about a documented feature, citing IDs</td></tr>
+<tr><td>Verify</td><td><code>spec-conformance</code></td><td>Audits the code against the Spec, forward and backward</td></tr>
+</tbody></table></div>
+
+<p><code>staged-engineering-doc</code> is the one you will use most, and it does not one-shot a document: it researches the codebase first, asks what it cannot ground, and marks what stays unresolved as <code>[OPEN-Q]</code> rather than guessing.</p>
+
+<h3>Security is already covered, and it is not in this plugin</h3>
+<p class="sub">three skills, every control anchored to a standard the reader can download</p>
+
+<div class="scroll"><table>
+<thead><tr><th>Skill</th><th>Covers</th></tr></thead>
+<tbody>
+<tr><td><code>secure-dev</code></td><td>Threat modelling, authentication and authorization (including object- and property-level), sessions, injection and output encoding, CSRF / SSRF / CORS, cryptography, secret handling, error handling, rate limiting, security logging, supply chain, and the AI / agent / MCP overlay</td></tr>
+<tr><td><code>secure-container-images</code></td><td>Dockerfiles and Containerfiles, multi-stage builds, non-root, capabilities, read-only root filesystem, image scanning, SBOM and signing</td></tr>
+<tr><td><code>production-readiness-gate</code></td><td>The go/no-go over a complete feature, with a vulnerability gate. <b>An engineering assessment, not a compliance certification and not an approval authority</b></td></tr>
+</tbody></table></div>
+
+<div class="card">
+  <h4>What each control is anchored to</h4>
+  <div class="scroll"><table>
+  <thead><tr><th>Anchor</th><th>Used for</th></tr></thead>
+  <tbody>
+  <tr><td>OWASP ASVS v5.0</td><td>The requirement set, and the L1/L2/L3 assurance ladder our <code>P1</code>&ndash;<code>R2</code> types map onto</td></tr>
+  <tr><td>OWASP Top 10:2025 &middot; API Security Top 10 2023 &middot; CWE Top 25</td><td>Naming a defect precisely enough to test for it</td></tr>
+  <tr><td>NIST SP 800-63B &middot; SP 800-218 (SSDF) &middot; SP 800-218A</td><td>Authentication assurance; lifecycle practices; the generative-AI profile</td></tr>
+  <tr><td>CIS Docker Benchmark &middot; NIST SP 800-190</td><td>Container build and runtime hardening</td></tr>
+  <tr><td>OWASP Top 10 for LLM Applications 2025</td><td>The AI / agent / MCP overlay</td></tr>
+  <tr><td>CVSS v4.0 &middot; EPSS &middot; CISA KEV</td><td>The vulnerability gate</td></tr>
+  </tbody></table></div>
+  <p>Two things follow from anchoring everything to public sources, and both are improvements. <b>A client can verify our work</b> &mdash; every threshold is either cited or explicitly labelled a T-Gency default they are free to replace with their own policy. And <b>the gaps become visible</b>: rotation cadence, log retention, remediation SLAs and exception approval levels are ours, and we say so.</p>
+  <p class="src">That last point is worth saying out loud in a client room: <i>these are our defaults; if you have a policy, we run against yours.</i></p>
+</div>
+
+<p><b>Where they belong is the whole point</b>, and it is not at the end:</p>
+
+<div class="scroll"><table>
+<thead><tr><th>When</th><th>Which</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>Writing the Spec</td><td><code>secure-dev</code>, starting with the threat model</td><td>So <code>NFR-*</code> and <code>TC-*</code> come from a real control list and a real threat list, not from intuition. Security shapes the WHAT</td></tr>
+<tr><td>Phase 2, completeness</td><td><code>secure-dev</code>, <code>secure-container-images</code></td><td>Implementing the constraints the Spec already committed to. Nothing new is discovered here</td></tr>
+<tr><td>Before the PR</td><td><code>production-readiness-gate</code></td><td>The go/no-go over the complete feature, on evidence</td></tr>
+</tbody></table></div>
+
+<p>Running only the last one turns security into a veto at the most expensive moment, and the one most likely to get waived under deadline.</p>
+
+<div class="card">
+  <h4>Known gaps, stated rather than implied</h4>
+  <ul>
+    <li>Infrastructure as code and Kubernetes beyond the container security context: no Terraform, NetworkPolicy or cluster RBAC coverage</li>
+    <li>Mobile and desktop clients: none</li>
+    <li>Model safety and evaluation &mdash; whether a model produces harmful output &mdash; as opposed to the security of the system around the model</li>
+    <li>Privacy engineering beyond data minimisation and retention: no data mapping, subject-rights workflow or transfer analysis</li>
+  </ul>
+  <p class="src">Multi-tenant row-level security used to be on this list. It is now covered in <code>secure-dev</code> &sect;3.2, which requires the tenant predicate to be enforced in the data layer and a test that proves a cross-tenant read fails. A checklist that hides its edges is worse than a short one.</p>
+</div>
+
+<p>The three live in <a href="skills.html"><code>skills/</code></a>, deliberately outside the plugin: they are meant to be <b>taken and adapted</b>, not installed as-is. Copy them into your repo's <code>.claude/skills/</code> and they load automatically.</p>
+
+<div class="card">
+  <h4>Installing it</h4>
+  <p><b>This repository is itself the marketplace.</b> Two lines, typed by a human inside Claude Code &mdash; they are client slash-commands, so an agent cannot run them for you:</p>
+  <p><code>/plugin marketplace add t-gency/spec-driven-development</code><br>
+     <code>/plugin install engineering-methodology@tgency-method</code></p>
+  <p>Point the first line at wherever your copy lives. To pick up a later version, <code>/plugin marketplace update tgency-method</code>.</p>
+  <p class="src">Three things to check before blaming the command. <b>The install is per machine, not per repo</b> &mdash; a new laptop needs it again. <b>Private repositories are unreliable here:</b> <code>marketplace add</code> clones over git, and against a private repo it can prompt for credentials, time out, or register the marketplace with no plugins and no visible error &mdash; authenticate first if the repo is not public. And <b>a wrong owner or repo reads as "marketplace not found"</b>, which looks like the plugin does not exist rather than like a typo.</p>
+</div>
+
+<p><b>Which version a document was written under is not a detail</b> &mdash; it decides which rules that Spec was approved against. So a document cites a <b>commit, never a branch</b>: a link to <code>main</code> will misrepresent, three weeks from now, what was actually agreed. The plugin is versioned, at <code>0.15.0</code> today, and it carries its own decision log (<code>MD-*</code>) and open questions (<code>EVO-*</code>).</p>
+
+<div class="card">
+  <h4>This copy is a mirror, and it says so</h4>
+  <p>The plugin is developed in a private engineering repository and mirrored into <code>plugins/engineering-methodology/</code> so that this repo is installable on its own. <code>UPSTREAM.md</code> records which upstream commit this copy corresponds to, and CI fails when the two disagree.</p>
+  <p class="src">A deliberate compromise, worth naming rather than hiding: a single source of truth beats a mirror, but a mirror that says which commit it is &mdash; and that breaks the build when it drifts &mdash; beats a copy nobody can date. <b>If you are adopting this, you have no upstream: delete <code>UPSTREAM.md</code> and let your repo be the source of truth.</b></p>
+</div>
+</section>
+
+<hr class="div">
+<section id="loop"><h2>6 &middot; The delivery loop</h2>
+<p class="sub">How a feature actually moves from idea to merged code. From the platform team, who run it today.</p>
+
+<p>Two principles decide everything downstream. <b>WHAT before HOW:</b> a feature's value is decided in the Concept Note and the Spec, not in the code. <b>Prototype first, then completeness:</b> get a version that works and show it to Product; only after they confirm the direction do you give the feature completeness.</p>
+
+<div class="scroll"><table>
+<thead><tr><th></th><th>Phase 1 &middot; Prototype</th><th>Phase 2 &middot; Completeness</th></tr></thead>
+<tbody>
+<tr><td><b>Goal</b></td><td>A working prototype Product can react to</td><td>Production-grade, complete feature</td></tr>
+<tr><td><b>Focus</b></td><td>Functional behaviour: <code>FR-*</code> and scenarios</td><td>Security, performance, completeness</td></tr>
+<tr><td><b><code>NFR-*</code> / <code>TC-*</code></b></td><td><b>Captured</b> in the Spec, <b>scheduled</b></td><td><b>Implemented</b> and verified</td></tr>
+<tr><td><b>Trigger</b></td><td>Ready when localhost proves the happy path</td><td>Starts only after Product sign-off</td></tr>
+</tbody></table></div>
+
+<p><b>The non-functional requirements are written into the Spec in Phase 1; they are just not built yet.</b> They are not discovered later and they are not optional. Deferring the work is not the same as deferring the decision, and conflating the two is how "we'll add security later" happens.</p>
+
+<div class="card">
+  <h4>Defining the WHAT is a team sport</h4>
+  <p>Product owns the WHY and the scope. Everyone else shapes it, and each role lands in a different family of IDs:</p>
+  <ul>
+    <li><b>Product</b> &rarr; <code>D-*</code>, scope</li>
+    <li><b>Engineering</b> &rarr; <code>TC-*</code>, the Plan</li>
+    <li><b>UX</b> &rarr; <code>FR-*</code>, scenarios, accessibility</li>
+    <li><b>Security</b> &rarr; <code>NFR-*</code>, <code>TC-*</code></li>
+    <li><b>Test / QA</b> &rarr; <code>S-*</code> variants, <code>AC-*</code></li>
+  </ul>
+  <p class="src">Stronger than an approval gate: four signatures at the end catch problems late; four authors from the start prevent them.</p>
+</div>
+
+<p>Ten steps, each a plain-language instruction to a coding agent. Steps 1 to 6 are Phase 1; 7 to 10 are Phase 2.</p>
+
+<div class="scroll"><table>
+<thead><tr><th>#</th><th>Step</th><th>What happens</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>Issue</b></td><td>One per independently deliverable user story, on the board, with the required fields</td></tr>
+<tr><td>2</td><td><b>Concept Note</b></td><td>The WHY, via guided Q&amp;A plus codebase research</td></tr>
+<tr><td>3</td><td><b>Spec</b></td><td>The WHAT: <code>FR-*</code> in EARS, every scenario with its variants</td></tr>
+<tr><td>4</td><td><b>Plan</b></td><td>Exact paths, a stacked-branch arc behind a flag, the traceability matrix</td></tr>
+<tr><td>5</td><td><b>Implement</b></td><td>Autonomous. Commit locally; <b>do not push</b></td></tr>
+<tr><td>6</td><td><b>Verify</b></td><td>Bring it up on localhost. Show Product the prototype</td></tr>
+<tr><td>7</td><td><b>Completeness</b></td><td>After sign-off: deferred <code>NFR-*</code> and <code>TC-*</code>, remaining variants</td></tr>
+<tr><td>8</td><td><b>Pre-PR gate</b></td><td>Four checks, all before anything goes up</td></tr>
+<tr><td>9</td><td><b>Open PRs</b></td><td>Stacked, each linked to its issue, the last one <code>Closes #NNN</code></td></tr>
+<tr><td>10</td><td><b>Watch to merge</b></td><td>A background loop keeps the stack green until it is ready</td></tr>
+</tbody></table></div>
+
+<div class="card">
+  <h4>The prompts that drive it</h4>
+  <p>Worth copying nearly verbatim, because the constraints in them are load-bearing.</p>
+  <ul>
+    <li><b>Concept Note</b> &mdash; <i>"Draft a concept note for {feature}. Research the codebase first, and ask me whatever you can't ground."</i> The second clause is what stops invention</li>
+    <li><b>Spec</b> &mdash; <i>"Turn this concept note into a spec. Keep the focus on the WHAT, and enumerate the variants for every scenario."</i> Variants are where happy-path-only Specs get caught</li>
+    <li><b>Implement</b> &mdash; <i>"Implement the whole plan end to end. Commit locally as you go, but do NOT push and do NOT open the PR: stop when it's ready to verify on localhost."</i> Nothing is pushed, so the session can run unattended</li>
+  </ul>
+  <p class="src">You do not type skill names. Every step is a plain-language instruction and the right skill loads from its description.</p>
+</div>
+
+<p><b>The pre-PR gate, four checks.</b> Coherence against the Spec, audited and reconciled. Enough end-to-end coverage asserting on the real DOM. Sibling Specs, ADRs and docs updated in the same change. A security review over the complete feature, not the prototype. <b>This is where the traceability finally gets enforced.</b></p>
+
+<p>We adopted the platform team's layout rather than the methodology's default: documents are committed to <code>specs/NNN-feature/</code> as <code>concept-note.md</code>, <code>spec.md</code> and <code>implementation-plan.md</code>. The methodology explicitly says to mirror whatever convention a repo already has, and a shared shape is what lets one person read across four codebases.</p>
+</section>
+
+<hr class="div">
+<section id="branching"><h2>7 &middot; Branching and PRs</h2>
+<p class="sub">Four long-lived branches, each bound to an environment and a publish channel.</p>
+
+<div class="scroll"><table>
+<thead><tr><th>Branch</th><th>Environment</th><th>Channel</th><th>Rule</th></tr></thead>
+<tbody>
+<tr><td><code>main</code></td><td>staging</td><td><code>release</code></td><td>Tagged. The last step before production</td></tr>
+<tr><td><code>release/*</code></td><td>qa</td><td><code>rc</code></td><td>Cut from <code>develop</code>. <b>Candidate fixes only</b></td></tr>
+<tr><td><code>develop</code></td><td>dev</td><td><code>dev</code></td><td>Deploys on every merge</td></tr>
+<tr><td><code>feature/*</code></td><td>&mdash;</td><td>&mdash;</td><td>Pull-request CI and local. Nothing else</td></tr>
+<tr><td><code>hotfix/*</code></td><td>&mdash;</td><td>&mdash;</td><td>Verified on its PR, then straight to staging</td></tr>
+</tbody></table></div>
+
+<p>Feature branches cut from <code>develop</code> and squash back into it, so its history reads as a list of features. A release branch is cut when a version is ready and from then on accepts <b>candidate fixes only</b>: that is the entire point of cutting it, and the rule most often bent. <b>Every commit on a release branch is forwarded back to <code>develop</code></b>, or a fix made during stabilization reappears as a regression in the next version. A hotfix branches from <code>main</code>, not <code>develop</code>, so it never picks up whatever is half-finished.</p>
+
+<p><b>Channels are not environments.</b> The channel is what CI publishes &mdash; <code>dev</code>, <code>rc</code>, <code>release</code>; the environment is where it runs. One branch produces one channel that lands in one environment, and a build is never promoted by being re-tagged into a different channel: it gets rebuilt from the branch that owns that channel.</p>
+
+<div class="card">
+  <h4>Stacked PRs</h4>
+  <p>A feature ships as several pull requests stacked on each other, not one large one. How many follows the Implementation Plan's branch arc, sized to the feature: one branch for a refactor, two for backend plus UI, five for a cross-service pair or a data migration.</p>
+  <ul>
+    <li><b>One issue per user story</b>, and every PR in the stack links to it: that issue is the home for the story &mdash; progress, blockers, decisions, PR history. A feature with three stories has three issues, each with its own stack</li>
+    <li><b>The last PR carries <code>Closes #NNN</code></b>, only the last, or the issue closes early</li>
+    <li><b>Each PR sits behind a feature flag</b>, so a partially merged stack is never a broken product</li>
+    <li><b>Merge bottom-up</b>, keeping each branch current with its parent and with <code>main</code></li>
+  </ul>
+  <p class="src">Every PR carries a conventional title, a link to the issue, and a <code>## Verified by</code> section naming the tests. Not "tested locally": the test names. Merging bottom-up is the tedious part, and it is a good candidate for a background agent loop.</p>
+</div>
+
+<p><b>The Spec-Drive gate.</b> A <code>feat</code> pull request needs its committed Spec, with its <code>FR-*</code>, <code>S-*</code> and <code>AC-*</code>, and CI checks it. Advisory first, required later; a genuine exception is declared with a <code>no-spec:</code> marker rather than by quietly omitting it &mdash; the same <i>declared-none-visible</i> rule the methodology applies everywhere. <b>Without this gate the rest is voluntary</b>, and traceability that nothing enforces decays at exactly the speed of deadline pressure.</p>
+
+<div class="card">
+  <h4>What we have to decide</h4>
+  <p>This model comes from the platform repo, our client surfaces do not all run it today, and adopting it is not free:</p>
+  <ul>
+    <li><b>Four long-lived branches need four environments.</b> A surface without a QA environment cannot run <code>release/*</code> meaningfully</li>
+    <li><b>Stacked PRs need review discipline.</b> Five small PRs reviewed slowly is worse than one large PR reviewed fast</li>
+    <li><b>The Spec-Drive gate needs the Specs to exist first.</b> Turning it on before that is a gate everyone learns to bypass</li>
+  </ul>
+  <p class="src">The sequencing that follows: <b>the gate goes on last</b>, after the documents exist and the branch model is running. Turning it on early teaches the team that gates are obstacles rather than agreements.</p>
+</div>
+</section>
+
+
+<hr class="div">
+<section id="docs"><h2>8 &middot; The documentation system</h2>
+<p class="sub">The three documents are not the whole story. This is the taxonomy around them.</p>
+
+<p>A feature Spec answers "what should this do". It does not answer "why is the whole system built this way", "what did we learn before we specified it", or "how does an operator restart it at 3am". The platform repo has a full taxonomy for that, and <b>the organising idea is not subject matter: it is how the document changes over time.</b></p>
+
+<div class="scroll"><table>
+<thead><tr><th>Path</th><th>What it is</th><th>Lifecycle</th></tr></thead>
+<tbody>
+<tr><td><code>README.md</code></td><td>The front door</td><td>Updated with the behaviour it describes</td></tr>
+<tr><td><code>specs/NNN-slug/**</code></td><td>The per-feature working set</td><td>Lives with the feature branch</td></tr>
+<tr><td><code>docs/specs/**</code></td><td><b>Design intent</b>, for engineers and agents</td><td>Carries a status banner; kept as the record</td></tr>
+<tr><td><code>docs/site/**</code></td><td><b>Shipped behaviour</b>, for users</td><td>Written when a feature ships</td></tr>
+<tr><td><code>docs/adrs/**</code></td><td>One-time architectural decisions</td><td><b>Immutable once accepted</b>: superseded, never edited</td></tr>
+<tr><td><code>docs/investigation/**</code></td><td>Pre-spec research, audits, post-mortems</td><td>Dated. A snapshot, never retro-edited</td></tr>
+<tr><td><code>docs/conventions/**</code></td><td>How we write code here</td><td>Living: fixed in the PR that changes the pattern</td></tr>
+<tr><td><code>docs/runbooks/**</code></td><td>Operator playbooks</td><td>Updated with the operation they describe</td></tr>
+</tbody></table></div>
+
+<p>Sorting by lifecycle rather than by topic is what stops the same fact from living in two places and disagreeing. A decision is immutable, a convention is living, research is a dated snapshot: three different rules, three different folders.</p>
+
+<div class="card">
+  <h4>Specs are not docs</h4>
+  <p>A <b>spec</b> describes proposed or in-progress design, for engineers and agents. A <b>doc</b> describes shipped, working behaviour, for users. <b>Never let a spec quietly become the user documentation:</b> when a feature ships, its spec gets <code>status: implemented</code> and a durable doc is written. The spec stays as the record of what was intended; the doc says what exists.</p>
+  <p>Collapsing the two is how a document ends up describing a design that shipped differently and nobody notices, because it reads like documentation.</p>
+  <p class="src">Every spec opens with one of five states: <code>draft</code> &middot; <code>proposed</code> &middot; <code>accepted</code> &middot; <code>implemented</code> &middot; <code>superseded</code>. That closes a hole in the methodology, where every template says <code>Draft</code> and nothing ever promotes it out. <code>superseded</code> is what lets a document be retired without being deleted.</p>
+</div>
+
+<p><b>ADRs are not Concept Note decisions.</b> A <code>D-*</code> is feature-scoped and lives with its feature. An ADR is cross-cutting and one-time: which database, which identity provider, which multi-tenancy model. And it is <b>immutable once accepted</b>: you do not edit an ADR when the decision changes, you write one that supersedes it. A decision log you can rewrite is not a decision log. The platform repo has 26; <b>we have none</b>, which means every cross-cutting decision our client surfaces have made lives in someone's memory or in a thread.</p>
+
+<p><b>The rule that makes the whole thing hold:</b> a behaviour change is not done until the docs that describe that behaviour change with it, <b>in the same PR</b>. Not a follow-up ticket. The reasoning is the argument against "we'll document it later": documentation that lags the code is <b>worse than none, because it is confidently wrong and readers act on it</b>. And the escape hatch is the familiar one: if no doc applies, say so in the PR description. <code>"No docs needed: internal refactor, no behaviour change"</code> is a complete answer. <b>Silence is not.</b></p>
+
+<p><b>Anything countable from the repo is generated, not maintained.</b> Generated blocks sit between markers and are rebuilt from the real source; a CI check fails on a stale block; the generator is <b>fail-closed</b>, so adding a service without a description aborts the build and names what you have to document. That is the good idea &mdash; a new component cannot reach <code>main</code> while remaining invisible in the README. The rule generalises: <i>if you find yourself hand-maintaining a list that could be counted from the repo, generate it instead.</i></p>
+
+<div class="card">
+  <h4>Seeds for the other four types</h4>
+  <p><a href="seeds.html">seeds/</a> has a starting point for each: a <b>seed skill</b> that teaches an agent to write that document type well, a <b>template</b>, and a <b>README for the destination folder</b>, so whoever opens <code>docs/adrs/</code> learns the rules without reading this.</p>
+  <p><code>seeds/adr/</code> &nbsp;<code>seeds/investigation/</code> &nbsp;<code>seeds/runbook/</code> &nbsp;<code>seeds/site-doc/</code></p>
+  <p class="src">Starting points, not finished products. Install one, use it for a month, edit it to match what your team actually does. The <code>description</code> in the front matter is the routing table: that is the field to get right when adapting, and the one to suspect when a skill does not fire.</p>
+</div>
+
+<div class="card">
+  <h4>What we should adopt, in order</h4>
+  <ul>
+    <li><b>The status vocabulary.</b> Five states, one banner per spec. Cheapest thing here and it closes a real hole</li>
+    <li><b><code>docs/investigation/</code>.</b> We already have the content with nowhere to put it: the platform API analysis, the design-audit findings, the migration study</li>
+    <li><b>The docs-change-in-the-same-PR rule</b>, with our own lookup table. No tooling needed to start: it is a review habit</li>
+    <li><b>ADRs.</b> Ours would start at three or four: the platform dependency, the shared design system, two chat components in parallel</li>
+    <li><b>Generated blocks.</b> Last, and only where we already hand-maintain a list that drifts</li>
+  </ul>
+  <p class="src">The first three cost nothing but agreement. The last two cost engineering time, and neither is worth doing before the first three are habits.</p>
+</div>
+
+<p><b>Writing rules worth stealing verbatim.</b> English only in the committed file, whatever language the conversation happens in. <b>State what is true now</b>, not what changed &mdash; changelogs live in git. <b>Link, do not copy:</b> one fact, one home, because a restatement is a future contradiction. <b>Delete confidently:</b> a section describing something that no longer exists is a bug. <b>Do not invent counts:</b> a number you could have counted from the repo belongs in a generator. And in review, <i>treat missing documentation the same as a missing test.</i></p>
+</section>
+
+
+<hr class="div">
+<section id="standard"><h2>9 &middot; Our issue standard</h2>
+<p class="sub">One team's answer to section 4, on a real board. Take the shape, not the vocabulary.</p>
+
+<div class="card">
+  <h4>GitHub is the single source of truth</h4>
+  <p>The backlog and the issues live in the repo, next to the code, so that <b>task &rarr; commit &rarr; PR &rarr; release</b> traceability is native and agents pick up context automatically. Each repo has its board; the expected access for the whole team is <b>Write</b>.</p>
+  <p><b>The boundary with the legacy tracker is clean:</b> the legacy tracker stays tied to maintenance of the previous major version, GitHub holds the new work. No ticket lives in both tools.</p>
+</div>
+
+<h3>Three paths, and the template decides which</h3>
+<div class="scroll"><table>
+<thead><tr><th>Path</th><th>When</th><th>Before coding</th><th>Template</th></tr></thead>
+<tbody>
+<tr><td><b>Spec</b></td><td>New or user-visible behaviour. Touches permissions, org and project context, contracts, multi-tenancy or telemetry</td><td>The pipeline in <code>specs/NNN-feature/</code></td><td><code>Feature</code></td></tr>
+<tr><td><b>Direct</b></td><td>A defect on already-specified behaviour, or internal work with no user surface</td><td>Nothing. Security and QA gates still apply</td><td><code>Bug</code></td></tr>
+<tr><td><b>Platform request</b></td><td>Something in the platform that does not exist or is not documented</td><td>Describe the contract needed</td><td><code>Platform request</code></td></tr>
+</tbody></table></div>
+
+<h3>Title convention and labels</h3>
+<p>The format is <b><code>Surface | Feature &rarr; Name</code></b>. <b>Every other dimension is a label, never in the title</b>, so it stays readable. The middle segment is the feature, and it names the <code>specs/NNN-feature/</code> folder.</p>
+
+<div class="scroll"><table>
+<thead><tr><th>Dimension</th><th>Values</th><th>What for</th></tr></thead>
+<tbody>
+<tr><td><code>surface:</code></td><td><code>web-chat</code> <code>web-design</code> <code>cowork</code> <code>code</code> <code>iOS</code> <code>ipados</code> <code>android</code> <code>cross</code></td><td>Separate squads inside shared repos. The only vocabulary that changes per repo</td></tr>
+<tr><td><code>origin:</code></td><td><code>product</code> <code>clients</code> <code>c-level</code> <code>market</code></td><td>Who is asking. No clear external requester &rarr; <code>product</code></td></tr>
+<tr><td><code>blocked:</code></td><td><code>needs-conceptnote</code> <code>needs-spec</code> <code>design</code> <code>platform</code></td><td>Which artifact is missing</td></tr>
+<tr><td><code>type:</code></td><td><code>feat</code> <code>fix</code> <code>chore</code> <code>spike</code> <code>decision</code></td><td>Recommended, not required</td></tr>
+</tbody></table></div>
+
+<p><b>Every <code>blocked:</code> label names a missing artifact, never a team.</b> Which team produces it is a separate question with a separate answer, and one that changes: the label would go stale. <b><code>Priority</code> is not a label either</b>, it is the org-level Issue field.</p>
+
+<div class="card">
+  <h4>Platform tickets are requests, not commitments</h4>
+  <ul>
+    <li>A pure platform ask carries <code>blocked:platform</code> and says so in its body</li>
+    <li><b>It does not count</b> in the squad forecast or in the release capacity</li>
+    <li>A feature that depends on an unresolved one <b>does not enter refinement</b></li>
+    <li>They are opened <b>in the repo of the surface that needs them</b>, not in the platform repo, so the team sees its own dependency on its own board</li>
+  </ul>
+</div>
+
+<h3>Templates, not a documented convention</h3>
+<p>The structure is encoded as <b>GitHub Issue Templates (forms)</b>: required fields validate themselves and labels apply automatically per template, so an issue is valid by construction instead of free text someone fixes afterwards. Four of them: <code>Feature</code>, <code>Platform request</code>, <code>Bug</code>, plus <code>config.yml</code>, which disables blank issues and gives the private path for vulnerabilities.</p>
+<p>Required fields, derived from what the flow already demands: acceptance criteria in <b>Gherkin</b>; permissions and org/project context; response contracts and multi-tenant behaviour; UX states (empty, loading, error); telemetry where it applies; and the <b>platform dependency classification</b> &mdash; known, agreed stub, or unknown.</p>
+
+<p><b>Entry condition for refinement, in one line:</b> an issue with any <code>blocked:</code> label does not enter. The labels map one-to-one onto the three conditions &mdash; approved Spec, validated mock-up, classified platform dependency &mdash; so the queue is filtered on the board instead of read issue by issue. <b>Unknown does not enable planning.</b></p>
+
+<div class="card">
+  <h4>The human gates</h4>
+  <p>The delivery loop's pre-PR gate is mechanical. These four are people, and they stay:</p>
+  <ul>
+    <li><b>Product &amp; Design</b>, <b>Security Review</b>, <b>QA Review</b>, and <b>Human Review</b> before merge</li>
+    <li>Automated SAST runs in parallel with them, not instead of them</li>
+  </ul>
+  <p class="src"><b>Known gap:</b> Product &amp; Design and Human Review are exactly where <i>Spec</i> defects surface, not implementation ones. The rejection reason should be typed, and a Spec gap routed back to the Concept Note with a version bump, instead of bouncing to implementation like every other rejection.</p>
+</div>
+</section>
+
+
+<footer>
+  T-Gency Apps &middot; method reference &middot; September 2026
+  <div class="met">
+    Written from the markdown in <b>docs/</b> &mdash; documents 0 to 9. If this page and a markdown file disagree, <b>the markdown is right and this page is stale.</b><br>
+    Runnable implementation: <b>engineering-methodology v0.15.0</b>, in <code>plugins/engineering-methodology/</code>. Install with <code>/plugin marketplace add t-gency/spec-driven-development</code>.<br>
+    Security skills: <b>skills/</b>, anchored to OWASP ASVS v5.0, OWASP Top 10:2025, CWE Top 25, NIST SP 800-63B / 800-218 / 800-190, the CIS Docker Benchmark and CVSS v4.0 / EPSS / CISA KEV.<br>
+    Licensed Apache-2.0. The worked example this material draws on is T-Gency's; the methodology is yours to take.
+  </div>
+</footer>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,7 @@
+# Every change gets a look from the maintainer.
+#
+# Swap this for a team (@t-gency/<team-name>) once one exists: a team survives
+# people joining and leaving, an individual handle does not. CODEOWNERS can
+# only reference teams inside the organization that owns the repository, which
+# is one of the reasons this lives under t-gency rather than a personal account.
+*   @amartilianom

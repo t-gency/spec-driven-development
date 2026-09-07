@@ -1,0 +1,15 @@
+{
+  "name": "tgency-method",
+  "owner": {
+    "name": "T-Gency",
+    "url": "https://github.com/t-gency/spec-driven-development"
+  },
+  "description": "Spec-driven development: three documents per feature, and the traceability layer that lets a tool walk from a requirement to the line of code that satisfies it.",
+  "plugins": [
+    {
+      "name": "engineering-methodology",
+      "source": "./plugins/engineering-methodology",
+      "description": "Three-stage AI-assisted feature methodology — Concept Note, Spec, Implementation Plan — with skills to author the documents, present them, answer questions from them, and audit the codebase against the Spec forward and backward."
+    }
+  ]
+}

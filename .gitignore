@@ -1,0 +1,41 @@
+# ---------------------------------------------------------------------------
+# internal/ is NOT published.
+#
+# It holds the worked example this material draws on — the board workflow, the
+# issue standard, the client-specific specifics. It is here so the team can
+# read it next to the public layer, and it must never reach a public remote.
+#
+# It should really live in its own private repository. Until it does, this
+# line is the only thing between it and the internet, so do not remove it and
+# do not `git add -f internal/`. CI fails the build if a path under internal/
+# is ever tracked.
+# ---------------------------------------------------------------------------
+internal/
+
+# Agent scratch
+.claude/worktrees/
+.claude/settings.local.json
+spec-conformance-data.json
+PRODUCTION_READINESS.md
+
+# OS and editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.idea/
+.vscode/
+
+# Office / OneDrive lock files — this material is authored in a synced folder
+~$*
+*.tmp
+
+# Python (the scripts and any local tooling)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node, if a doc tool ever lands here
+node_modules/

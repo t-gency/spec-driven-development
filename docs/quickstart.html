@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quickstart · Spec-Driven Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style data-src="method.css">
+/* GENERATED from docs/method.css - do not edit here.
+   Edit method.css and run scripts/build-site.sh */
+/* =============================================================
+   T-Gency method reference — one content width, one call-out.
+   The width is set by the grid column, not per element, so prose,
+   cards, tables and rules share the same left and right edge.
+   ============================================================= */
+:root{
+  --bg:#08080A; --panel:#121218; --panel2:#16161D;
+  --line:#232330; --line2:#2E2E3D;
+  --tx:#E8E8F0; --tx2:#A0A0B4; --tx3:#6E6E85;
+  --purple:#8B5CF6; --blue:#3B82F6; --cyan:#22D3EE; --green:#A3E635;
+  --red:#F0506E; --amber:#F5A524;
+  --grad:linear-gradient(90deg,var(--purple),var(--blue),var(--green));
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:15.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{display:grid;grid-template-columns:236px minmax(0,1fr);max-width:1560px;margin:0 auto}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;height:100vh;overflow-y:auto;padding:28px 14px 40px;border-right:1px solid var(--line)}
+.brand{font-size:19px;font-weight:700;letter-spacing:-.02em}
+.brand span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand em{font-style:normal;color:var(--green)}
+.brandsub{font-size:11px;color:var(--tx3);letter-spacing:.09em;text-transform:uppercase;margin:2px 0 24px}
+nav a{display:block;padding:6px 10px;border-radius:6px;font-size:13.5px;color:var(--tx2);text-decoration:none}
+nav a:hover{background:var(--panel);color:var(--tx)}
+.navgrp{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--tx3);margin:20px 0 6px 10px;font-weight:600}
+nav .ext{font-size:12.5px;color:var(--tx3)}
+nav .ext:hover{color:var(--tx)}
+
+/* ---------- type ---------- */
+main{padding:0 44px 110px 46px;min-width:0}
+section{padding-top:52px;scroll-margin-top:12px}
+h1{font-size:33px;line-height:1.15;letter-spacing:-.025em;margin:0 0 10px;font-weight:700}
+h2{font-size:22px;letter-spacing:-.02em;margin:0 0 14px;font-weight:600;display:flex;align-items:center;gap:11px}
+h2::before{content:"";width:3px;height:19px;border-radius:2px;background:var(--grad);flex:none}
+h3{font-size:16px;margin:28px 0 8px;font-weight:600;letter-spacing:-.01em}
+h4{font-size:12.5px;margin:0 0 8px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--tx2)}
+p{margin:0 0 13px;color:var(--tx2);line-height:1.72}
+.lead{font-size:16.5px}
+.sub{font-size:14px;color:var(--tx3);margin:-6px 0 18px}
+ul{margin:0 0 14px;padding-left:19px;color:var(--tx2)}
+li{margin:6px 0;line-height:1.72}
+strong,b{color:var(--tx);font-weight:600}
+a{color:var(--cyan)}
+code{font:12.5px var(--mono);background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--cyan);border:1px solid var(--line)}
+hr{border:0;border-top:1px solid var(--line);margin:42px 0 0}
+/* the grid column owns the measure, not the element */
+main p,main ul,main ol,main li,main div,main table,main section,main hr,
+main header,main h1,main h2,main h3,main h4,footer{max-width:none}
+
+/* ---------- header ---------- */
+header{padding:44px 0 28px;border-bottom:1px solid var(--line)}
+.meta{display:flex;gap:22px;flex-wrap:wrap;font-size:12.5px;color:var(--tx3);margin-top:18px}
+.meta b{color:var(--tx2);font-weight:500}
+
+/* ---------- the one call-out ----------
+   There used to be five frames. Five frames make a reader think each
+   one is a different kind of information, when the argument simply
+   continues. Two formats in the whole document: plain text, and this. */
+.card,.note{
+  background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  padding:16px 18px;margin:14px 0;font-size:14px;color:var(--tx2)
+}
+.card h4,.note h4{
+  margin:0 0 9px;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--tx3);font-weight:700
+}
+.card p:last-child,.card ul:last-child,.note p:last-child{margin-bottom:0}
+.card b,.note b{color:var(--tx)}
+/* the closing line of a call-out: same frame, less weight */
+.card .src,.note .src{font-size:12.5px;color:var(--tx3);margin-top:10px;margin-bottom:0}
+.src{font-size:11.5px;color:var(--tx3)}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:11px;background:var(--panel);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);font-weight:600;padding:12px 13px 8px;border-bottom:1px solid var(--line2);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--tx2);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:0}
+td p,td ul{max-width:none}
+
+/* ---------- inline status ---------- */
+.pill{display:inline-flex;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:20px;border:1px solid;white-space:nowrap}
+.p-red{color:#FF8FA3;border-color:#5C1F2E;background:#2A0F17}
+.p-amb{color:#FFC978;border-color:#5C4318;background:#2A1F0C}
+.p-blu{color:#8FC5FF;border-color:#1E3A5C;background:#0D1B2A}
+.p-gry{color:var(--tx2);border-color:var(--line2);background:var(--panel2)}
+.p-pur{color:#C4A8FF;border-color:#3D2A5C;background:#190F2A}
+.yes{color:var(--green)}.no{color:var(--red)}.part{color:var(--amber)}
+
+/* ---------- checked list ---------- */
+.tick{list-style:none;padding:0;margin:0 0 6px}
+.tick li{padding-left:20px;position:relative;margin:6px 0;font-size:14px}
+.tick li::before{position:absolute;left:0;font-weight:700}
+.tick li.y::before{content:"\2713";color:var(--green)}
+.tick li.p::before{content:"~";color:var(--amber);font-size:16px;top:-2px}
+.tick li.n::before{content:"\2715";color:var(--red);font-size:12px;top:2px}
+
+/* ---------- chain / code block ---------- */
+.chain{font:12.5px/1.9 var(--mono);color:var(--tx2);margin:0}
+.chain code{background:none;border:0;padding:0}
+
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--tx3)}
+footer .met{margin-top:10px;font-size:11.5px;line-height:1.8}
+footer .met b{color:var(--tx2);font-weight:500}
+
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  main{padding:0 20px 80px}
+  h1{font-size:26px}
+}
+</style>
+</head><body>
+<div class="wrap">
+<nav>
+  <div class="brand">T-Gency <em>&#9654;</em> Method</div>
+  <div class="brandsub">Spec-Driven Development</div>
+
+  <div class="navgrp">On this page</div>
+  <a href="#need">1 &middot; What you need</a>
+  <a href="#install">2 &middot; Install the plugin</a>
+  <a href="#pick">3 &middot; Pick the first feature</a>
+  <a href="#loop">4 &middot; Your first feature</a>
+  <a href="#where">5 &middot; Where documents live</a>
+  <a href="#fails">When something fails</a>
+
+  <div class="navgrp">The reference</div>
+  <a class="ext" href="index.html">&larr; All nine sections</a>
+  <a class="ext" href="talk-outline.html">Talk outline &rarr;</a>
+  <a class="ext" href="skills.html">Security skills &rarr;</a>
+  <a class="ext" href="seeds.html">Document seeds &rarr;</a>
+</nav>
+<main>
+<header>
+  <h1>Quickstart</h1>
+  <p class="lead">From nothing installed to a first feature shipped through the methodology, on <b>your own project</b>. About 20 minutes of setup, most of it waiting for installs, and then the length of one real feature.</p>
+  <div class="meta">
+    <span><b>You do not need to know how to code</b> to write the documents</span>
+    <span><b>You do need</b> a repository to point the agent at</span>
+    <span><b>Full reference</b> <a href="index.html">the nine sections</a></span>
+  </div>
+</header>
+
+<section id="need"><h2>1 &middot; What you need</h2>
+<p class="sub">Three things, and only one of them is unusual.</p>
+
+<div class="scroll"><table>
+<thead><tr><th>Tool</th><th>Why</th><th>Check</th></tr></thead>
+<tbody>
+<tr><td><b>Claude Code</b></td><td>The agent that writes the documents, implements the plan, and audits the code against the Spec</td><td><code>claude --version</code></td></tr>
+<tr><td><b>Git</b></td><td>Everything here lives next to code</td><td><code>git --version</code></td></tr>
+<tr><td><b>A POSIX shell</b></td><td>The mechanical gates are <code>grep</code> / <code>sed</code> / <code>awk</code> / <code>comm</code> pipelines</td><td><code>bash --version</code></td></tr>
+</tbody></table></div>
+
+<div class="card">
+  <h4>Windows: the gates do not run in PowerShell</h4>
+  <p>They use process substitution, which PowerShell has no equivalent for. Use <b>Git Bash</b> (it ships with Git for Windows) or <b>WSL</b>. You can write and read the documents from anywhere; it is only the gates that need bash.</p>
+  <p class="src">And prefix sorted comparisons with <code>LC_ALL=C</code>. <code>comm</code> requires both sides sorted the same way, and a machine set to a non-English locale sorts differently &mdash; when that happens <code>comm</code> returns garbage <b>without reporting an error</b>, telling you scenarios have no test when they do. One environment variable removes the whole class of problem.</p>
+</div>
+</section>
+
+<hr class="div">
+<section id="install"><h2>2 &middot; Install the plugin</h2>
+<p class="sub">Two lines, typed by a human inside Claude Code.</p>
+
+<div class="card">
+  <p><code>/plugin marketplace add t-gency/spec-driven-development</code><br>
+     <code>/plugin install engineering-methodology@tgency-method</code></p>
+  <p>They are client slash-commands, so an agent cannot run them for you. Point the first line at wherever your copy of this repo lives.</p>
+  <p class="src">That installs four skills at once &mdash; authoring, presenting, querying and verifying. <b>The install is per machine, not per repo:</b> a new laptop needs it again. To pick up a later version, <code>/plugin marketplace update tgency-method</code>.</p>
+</div>
+
+<h3>Check it worked</h3>
+<p>Ask in plain language &mdash; not by naming a skill:</p>
+<div class="card"><p><i>Does the code match the spec for this feature? Audit it and list every gap.</i></p></div>
+<p>If it starts asking <b>which</b> feature and which Spec instead of asking what you mean, the plugin is there. <b>You never type a skill's name.</b> You describe what you want, and the routing table in each skill's front matter picks the right one.</p>
+
+<h3>Optional: the security skills</h3>
+<p>They are not in the plugin, on purpose &mdash; they are meant to be copied and adapted:</p>
+<div class="card">
+  <p><code>mkdir -p .claude/skills</code><br>
+     <code>cp -r skills/secure-dev skills/secure-container-images skills/production-readiness-gate .claude/skills/</code></p>
+  <p class="src">Read <a href="skills.html">what each one covers</a> before adapting. Every threshold in them that does not come from a public standard is labelled as a default you should replace with your own policy.</p>
+</div>
+</section>
+
+<hr class="div">
+<section id="pick"><h2>3 &middot; Pick the right first feature</h2>
+<p class="sub">Not the easiest one.</p>
+
+<p>An easy feature will not surface the problems, and you will conclude the methodology is cheap. <b>Pick the most expensive thing on your board</b> &mdash; the one where people disagree about what it should do.</p>
+
+<p>And be honest about the alternative: most work should <b>not</b> get this treatment.</p>
+
+<div class="scroll"><table>
+<thead><tr><th>Your ticket is&hellip;</th><th>What to run</th></tr></thead>
+<tbody>
+<tr><td>Blocked on a decision nobody has made</td><td><b>Concept Note only</b></td></tr>
+<tr><td>Blocked on "we don't actually know what this should do"</td><td><b>Concept Note + Spec</b></td></tr>
+<tr><td>Blocked on an external team's contract</td><td><b>Nothing.</b> You need their contract, not your Spec</td></tr>
+<tr><td>Not blocked</td><td><b>Nothing.</b> Write a good ticket and ship</td></tr>
+</tbody></table></div>
+
+<p><b>A team that runs the full pipeline on everything will quietly stop running it on anything.</b> The honest cost is 15,000 to 40,000 words per feature across the three documents, plus real calendar time to write and review them. <a href="index.html#adopting">Section 4</a> is about deciding what earns it.</p>
+</section>
+
+<hr class="div">
+<section id="loop"><h2>4 &middot; Your first feature, end to end</h2>
+<p class="sub">Open Claude Code in the repository the feature lives in. Copy the prompts nearly verbatim &mdash; the constraints inside them are load-bearing.</p>
+
+<h3>4.1 &middot; The Concept Note</h3>
+<p class="sub">why, and in what direction</p>
+<div class="card"><p><i>Draft a concept note for {feature}. Research the codebase first, and ask me whatever you can't ground.</i></p>
+<p class="src">That second clause is what stops invention. Expect to be interviewed: it reads your code, checks the standards that apply, looks for prior art, and only then asks what it could not find out on its own. Anything still unresolved comes back as <code>[OPEN-Q-N]</code> rather than a guess.</p></div>
+<p><b>What you are reviewing:</b> the numbered decisions <code>D-01</code>, <code>D-02</code>&hellip; each with a reversibility flag (Easy / Hard / One-way), the non-goals, and the handoff section that splits everything into <i>settled &mdash; do not relitigate</i>, <i>decide in the Spec</i>, and <i>must remain non-goals</i>.</p>
+
+<h3>4.2 &middot; The Spec</h3>
+<p class="sub">what it must do</p>
+<div class="card"><p><i>Turn this concept note into a spec. Keep the focus on the WHAT, and enumerate the variants for every scenario.</i></p>
+<p class="src">Variants are where happy-path-only Specs get caught. Every scenario declares its boundary, failure, concurrency and property variants &mdash; or says explicitly that it has none, and why.</p></div>
+
+<p><b>Review this one properly.</b> It is the document everything downstream is held to. Two tests you can apply without being an engineer:</p>
+<ul>
+  <li><b>Can each requirement be violated?</b> <span class="no">&#10007;</span> <i>The system must be fast</i> cannot. <span class="yes">&#10003;</span> <i>The system shall return search results within 300 ms at p95 for datasets under 10,000 records</i> can.</li>
+  <li><b>Is anything vague?</b> "Robust", "secure", "seamless" are defects, not requirements.</li>
+</ul>
+<p>If security matters at all, <b>this is where it enters</b> &mdash; not in review three weeks later. Ask: <i>review this spec against our security standards and tell me which NFRs and TCs are missing.</i></p>
+
+<h3>4.3 &middot; The Plan</h3>
+<p class="sub">what to build, where, in what order</p>
+<div class="card"><p><i>Generate an implementation plan from the spec. Use real file paths, stacked branches per the arc behind a flag, and a scenario &rarr; test matrix.</i></p>
+<p class="src"><b>The test:</b> hand it to a competent person who has never seen the codebase, give them five days, and they ship without asking a question. If the plan says "the auth module" instead of <code>src/auth/session.ts</code> and a function signature, send it back.</p></div>
+
+<h3>4.4 &middot; Implement</h3>
+<div class="card"><p><i>Implement the whole plan end to end. Commit locally as you go, but do NOT push and do NOT open the PR: stop when it's ready to verify on localhost.</i></p>
+<p class="src">Nothing gets pushed, so this can run unattended. Go do something else.</p></div>
+
+<h3>4.5 &middot; Verify &mdash; the part people skip</h3>
+<div class="card"><p><i>Make sure every service I need to validate {feature} on localhost is running: start whatever is down. Then walk me through validating the change, and give me example API calls where that is the clearest check.</i></p>
+<p class="src">The bar for this phase is that <b>the happy path works in a browser</b>. Nothing more. Show it to whoever owns the WHY and get a real answer before investing in completeness.</p></div>
+
+<h3>4.6 &middot; The audit &mdash; and this is the demo</h3>
+<div class="card"><p><i>Audit the code against the spec for {feature}. Report every obligation with one verdict, and tell me what the code does that the spec never sanctioned.</i></p></div>
+
+<p>Every requirement, scenario, constraint and acceptance criterion comes back with exactly one verdict, each citing a file and a line at a pinned commit:</p>
+
+<div class="scroll"><table>
+<thead><tr><th>Verdict</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><span class="pill p-blu">IMPLEMENTED</span></td><td>The code satisfies it, and here is the file and line</td></tr>
+<tr><td><span class="pill p-amb">PARTIAL</span></td><td>Half of it is there; here is which half is missing</td></tr>
+<tr><td><span class="pill p-red">ABSENT</span></td><td>Nothing satisfies it, and here is where it would live</td></tr>
+<tr><td><span class="pill p-red">DIVERGENT</span></td><td>The code contradicts it</td></tr>
+<tr><td><span class="pill p-gry">UNVERIFIABLE</span></td><td>It could not be checked, and here is why</td></tr>
+</tbody></table></div>
+
+<p>Then it sweeps <b>backwards</b>, looking for behaviour in your code that no ID sanctions. <b>Run this on a feature you thought was finished.</b> That first report is what convinces a team, and no amount of explaining substitutes for it.</p>
+
+<h3>4.7 &middot; Completeness, then ship</h3>
+<div class="card"><p><i>Product confirmed the prototype. Now complete {feature}: implement the deferred NFRs and TCs, and close the remaining scenario variants.</i></p>
+<p class="src">Then the pre-PR gate &mdash; conformance reconciled, end-to-end coverage, sibling docs updated in the same change, and a security review over the complete feature rather than the prototype. Details in <a href="index.html#loop">the delivery loop</a>.</p></div>
+</section>
+
+<hr class="div">
+<section id="where"><h2>5 &middot; Where the documents live</h2>
+<p class="sub">Next to the code, one folder per feature.</p>
+
+<div class="card">
+  <p class="chain">specs/<br>
+  &nbsp;&nbsp;001-conversations/<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;concept-note.md<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;spec.md<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;implementation-plan.md</p>
+  <p class="src">The methodology says to mirror whatever convention your repo already uses, so if you have a <code>docs/</code> layout, use it. What matters is that it is <b>the same shape in every repo</b>, because that is what lets one person read across several codebases.</p>
+</div>
+
+<p>And point your tickets at them with two fields in the body. This is the entire bridge between a board and a document set:</p>
+
+<div class="card"><p class="chain">Docs:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specs/001-conversations/<br>Satisfies: FR-003, S-04, AC-12</p></div>
+</section>
+
+<hr class="div">
+<section id="fails"><h2>When something fails</h2>
+
+<div class="scroll"><table>
+<thead><tr><th>What you see</th><th>What it means</th></tr></thead>
+<tbody>
+<tr><td><code>Marketplace not found</code></td><td>The <code>&lt;owner&gt;/&lt;repo&gt;</code> is wrong, or the repo is private and you have no access. The error does not say "permissions"</td></tr>
+<tr><td>The command runs but no skill loads</td><td>The install is per machine. Run step 2 again on this machine</td></tr>
+<tr><td>A gate reports <b>every</b> scenario as uncovered</td><td>You are running it in PowerShell, or your locale is not <code>C</code>. Use Git Bash or WSL, and prefix sorts with <code>LC_ALL=C</code></td></tr>
+<tr><td>A gate reports IDs that do not exist</td><td>Almost always an unanchored grep. <code>D-</code> matches inside <code>TD-</code>; <code>S-</code> matches inside <code>OBS-</code>. Use the recipes as written</td></tr>
+<tr><td>The agent invents a requirement</td><td>It was asked for a Spec with no Concept Note to ground it, or the prompt dropped the <i>"ask me whatever you can't ground"</i> clause</td></tr>
+<tr><td>The audit says <code>UNVERIFIABLE</code> a lot</td><td>Usually the test-binding convention is not recorded in Plan &sect;5, so nothing can find the tests</td></tr>
+</tbody></table></div>
+
+<p><b>Anything else: copy the whole error and ask.</b> Do not re-run a command that failed without knowing why.</p>
+
+<div class="card">
+  <h4>What you cannot break</h4>
+  <ul class="tick">
+    <li class="y"><b>The documents are just markdown</b> in your repo. Delete the folder and you have lost nothing but the writing</li>
+    <li class="y"><b>Nothing here pushes code.</b> The implement step commits locally and stops</li>
+    <li class="y"><b>The audit never executes your code.</b> It reads. Bound tests are read to confirm they exist, never run &mdash; and an obligation only a run could settle comes back <code>UNVERIFIABLE</code> with the command named for you</li>
+    <li class="y"><b>The audit writes nothing into the audited repo</b> by default. Its output goes to the agent's scratchpad unless you ask for it somewhere</li>
+  </ul>
+  <p class="src">Reassurance, because fear of breaking something is what stops people from trying.</p>
+</div>
+
+<h3>Read next</h3>
+<div class="scroll"><table>
+<thead><tr><th>Document</th><th>What it is</th><th>Read it when</th></tr></thead>
+<tbody>
+<tr><td><a href="index.html#why"><b>1 &middot; What it is, and why</b></a></td><td>The argument</td><td>You need to convince someone</td></tr>
+<tr><td><a href="index.html#traceability"><b>3 &middot; Traceability</b></a></td><td>The mechanism</td><td>Always. It is the part that makes this work rather than ceremony</td></tr>
+<tr><td><a href="index.html#adopting"><b>4 &middot; Adopting it</b></a></td><td>The four questions the methodology does not answer</td><td>Before rolling it out to a team</td></tr>
+<tr><td><a href="index.html#loop"><b>6 &middot; The delivery loop</b></a></td><td>The ten steps in full</td><td>When section 4 above stops being enough</td></tr>
+</tbody></table></div>
+</section>
+
+<footer>
+  T-Gency Apps &middot; quickstart &middot; September 2026
+  <div class="met">
+    Written from <b>docs/00-quickstart.md</b>. If this page and the markdown disagree, <b>the markdown is right and this page is stale.</b><br>
+    Licensed Apache-2.0. The worked example this material draws on is T-Gency's; the methodology is yours to take.
+  </div>
+</footer>
+</main>
+</div>
+</body></html>

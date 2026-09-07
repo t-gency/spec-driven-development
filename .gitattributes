@@ -1,0 +1,13 @@
+# Normalize line endings on commit. The mechanical gates are POSIX shell
+# pipelines, and a stray \r at the end of an extracted ID makes `comm`
+# report every ID as unmatched — silently, which is the worst kind.
+* text=auto eol=lf
+
+# Shell scripts must be LF even on a Windows checkout, or bash refuses them
+# with "bad interpreter: /usr/bin/env bash^M: no such file or directory".
+*.sh text eol=lf
+
+# Binary
+*.png binary
+*.jpg binary
+*.pdf binary

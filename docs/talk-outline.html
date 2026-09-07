@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Talk outline · Spec-Driven Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style data-src="method.css">
+/* GENERATED from docs/method.css - do not edit here.
+   Edit method.css and run scripts/build-site.sh */
+/* =============================================================
+   T-Gency method reference — one content width, one call-out.
+   The width is set by the grid column, not per element, so prose,
+   cards, tables and rules share the same left and right edge.
+   ============================================================= */
+:root{
+  --bg:#08080A; --panel:#121218; --panel2:#16161D;
+  --line:#232330; --line2:#2E2E3D;
+  --tx:#E8E8F0; --tx2:#A0A0B4; --tx3:#6E6E85;
+  --purple:#8B5CF6; --blue:#3B82F6; --cyan:#22D3EE; --green:#A3E635;
+  --red:#F0506E; --amber:#F5A524;
+  --grad:linear-gradient(90deg,var(--purple),var(--blue),var(--green));
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:15.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{display:grid;grid-template-columns:236px minmax(0,1fr);max-width:1560px;margin:0 auto}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;height:100vh;overflow-y:auto;padding:28px 14px 40px;border-right:1px solid var(--line)}
+.brand{font-size:19px;font-weight:700;letter-spacing:-.02em}
+.brand span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand em{font-style:normal;color:var(--green)}
+.brandsub{font-size:11px;color:var(--tx3);letter-spacing:.09em;text-transform:uppercase;margin:2px 0 24px}
+nav a{display:block;padding:6px 10px;border-radius:6px;font-size:13.5px;color:var(--tx2);text-decoration:none}
+nav a:hover{background:var(--panel);color:var(--tx)}
+.navgrp{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--tx3);margin:20px 0 6px 10px;font-weight:600}
+nav .ext{font-size:12.5px;color:var(--tx3)}
+nav .ext:hover{color:var(--tx)}
+
+/* ---------- type ---------- */
+main{padding:0 44px 110px 46px;min-width:0}
+section{padding-top:52px;scroll-margin-top:12px}
+h1{font-size:33px;line-height:1.15;letter-spacing:-.025em;margin:0 0 10px;font-weight:700}
+h2{font-size:22px;letter-spacing:-.02em;margin:0 0 14px;font-weight:600;display:flex;align-items:center;gap:11px}
+h2::before{content:"";width:3px;height:19px;border-radius:2px;background:var(--grad);flex:none}
+h3{font-size:16px;margin:28px 0 8px;font-weight:600;letter-spacing:-.01em}
+h4{font-size:12.5px;margin:0 0 8px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--tx2)}
+p{margin:0 0 13px;color:var(--tx2);line-height:1.72}
+.lead{font-size:16.5px}
+.sub{font-size:14px;color:var(--tx3);margin:-6px 0 18px}
+ul{margin:0 0 14px;padding-left:19px;color:var(--tx2)}
+li{margin:6px 0;line-height:1.72}
+strong,b{color:var(--tx);font-weight:600}
+a{color:var(--cyan)}
+code{font:12.5px var(--mono);background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--cyan);border:1px solid var(--line)}
+hr{border:0;border-top:1px solid var(--line);margin:42px 0 0}
+/* the grid column owns the measure, not the element */
+main p,main ul,main ol,main li,main div,main table,main section,main hr,
+main header,main h1,main h2,main h3,main h4,footer{max-width:none}
+
+/* ---------- header ---------- */
+header{padding:44px 0 28px;border-bottom:1px solid var(--line)}
+.meta{display:flex;gap:22px;flex-wrap:wrap;font-size:12.5px;color:var(--tx3);margin-top:18px}
+.meta b{color:var(--tx2);font-weight:500}
+
+/* ---------- the one call-out ----------
+   There used to be five frames. Five frames make a reader think each
+   one is a different kind of information, when the argument simply
+   continues. Two formats in the whole document: plain text, and this. */
+.card,.note{
+  background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  padding:16px 18px;margin:14px 0;font-size:14px;color:var(--tx2)
+}
+.card h4,.note h4{
+  margin:0 0 9px;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--tx3);font-weight:700
+}
+.card p:last-child,.card ul:last-child,.note p:last-child{margin-bottom:0}
+.card b,.note b{color:var(--tx)}
+/* the closing line of a call-out: same frame, less weight */
+.card .src,.note .src{font-size:12.5px;color:var(--tx3);margin-top:10px;margin-bottom:0}
+.src{font-size:11.5px;color:var(--tx3)}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:11px;background:var(--panel);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);font-weight:600;padding:12px 13px 8px;border-bottom:1px solid var(--line2);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--tx2);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:0}
+td p,td ul{max-width:none}
+
+/* ---------- inline status ---------- */
+.pill{display:inline-flex;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:20px;border:1px solid;white-space:nowrap}
+.p-red{color:#FF8FA3;border-color:#5C1F2E;background:#2A0F17}
+.p-amb{color:#FFC978;border-color:#5C4318;background:#2A1F0C}
+.p-blu{color:#8FC5FF;border-color:#1E3A5C;background:#0D1B2A}
+.p-gry{color:var(--tx2);border-color:var(--line2);background:var(--panel2)}
+.p-pur{color:#C4A8FF;border-color:#3D2A5C;background:#190F2A}
+.yes{color:var(--green)}.no{color:var(--red)}.part{color:var(--amber)}
+
+/* ---------- checked list ---------- */
+.tick{list-style:none;padding:0;margin:0 0 6px}
+.tick li{padding-left:20px;position:relative;margin:6px 0;font-size:14px}
+.tick li::before{position:absolute;left:0;font-weight:700}
+.tick li.y::before{content:"\2713";color:var(--green)}
+.tick li.p::before{content:"~";color:var(--amber);font-size:16px;top:-2px}
+.tick li.n::before{content:"\2715";color:var(--red);font-size:12px;top:2px}
+
+/* ---------- chain / code block ---------- */
+.chain{font:12.5px/1.9 var(--mono);color:var(--tx2);margin:0}
+.chain code{background:none;border:0;padding:0}
+
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--tx3)}
+footer .met{margin-top:10px;font-size:11.5px;line-height:1.8}
+footer .met b{color:var(--tx2);font-weight:500}
+
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  main{padding:0 20px 80px}
+  h1{font-size:26px}
+}
+</style>
+</head><body>
+<div class="wrap">
+<nav>
+  <div class="brand">T-Gency <em>&#9654;</em> Method</div>
+  <div class="brandsub">Talk outline</div>
+
+  <div class="navgrp">Running order</div>
+  <a href="#open">0 &middot; Open with the failure</a>
+  <a href="#died">1 &middot; Why the old answer failed</a>
+  <a href="#changed">2 &middot; What changed</a>
+  <a href="#three">3 &middot; The three documents</a>
+  <a href="#trace">4 &middot; Traceability</a>
+  <a href="#real">5 &middot; Making it real</a>
+  <a href="#cost">6 &middot; Close on the cost</a>
+  <a href="#qa">Questions to expect</a>
+
+  <div class="navgrp">The reference</div>
+  <a class="ext" href="index.html">&larr; All nine sections</a>
+  <a class="ext" href="quickstart.html">0 &middot; Quickstart &rarr;</a>
+  <a class="ext" href="skills.html">Security skills &rarr;</a>
+  <a class="ext" href="seeds.html">Document seeds &rarr;</a>
+</nav>
+<main>
+<header>
+  <h1>Talk outline</h1>
+  <p class="lead">Two audiences, and they need different talks &mdash; but the first twenty minutes are the same. Product broadly, and the team who will actually use this.</p>
+  <div class="meta">
+    <span><b>Length</b> 45 minutes plus questions</span>
+    <span><b>Broad audience</b> cut section 5</span>
+    <span><b>The team</b> cut nothing</span>
+  </div>
+</header>
+
+<section id="open"><h2>0 &middot; Open with the failure, not the solution</h2>
+<p class="sub">3 minutes</p>
+
+<p><b>Do not start with "there is a methodology with three documents."</b> Start with the three questions nobody can answer three weeks after shipping:</p>
+
+<ul>
+  <li>Was this decided, or did someone assume it?</li>
+  <li>Is the code doing what we agreed, or what was convenient?</li>
+  <li>If we change this, what breaks?</li>
+</ul>
+
+<p>Ask for a show of hands on who has been unable to answer one of these in the last month. <b>The material lands very differently once the room has admitted the problem.</b></p>
+</section>
+
+<hr class="div">
+<section id="died"><h2>1 &middot; Why the old answer failed</h2>
+<p class="sub">5 minutes</p>
+
+<p>Specs are not a new idea. They died, and the reason matters: <b>the spec went stale and nobody could afford to keep it current.</b></p>
+
+<p>Anyone in the room over 35 has lived this and is already sceptical. <b>Say it before they do.</b></p>
+</section>
+
+<hr class="div">
+<section id="changed"><h2>2 &middot; What changed</h2>
+<p class="sub">5 minutes &mdash; two things, and the second is the real one</p>
+
+<ul>
+  <li>An agent can write most of the document. Cost per Spec drops from days to hours</li>
+  <li><b>An agent can audit the code against it.</b> The loop that was always missing closes</li>
+</ul>
+
+<p>Land the asymmetry explicitly: <b>writing was never the hard part. Verifying was. That is what got cheap.</b></p>
+</section>
+
+<hr class="div">
+<section id="three"><h2>3 &middot; The three documents</h2>
+<p class="sub">10 minutes &mdash; one slide each</p>
+
+<p>Do not read the section lists; the templates exist for that.</p>
+
+<ul>
+  <li><b>Concept Note</b> &mdash; why, and in what direction. Divergent. Decisions get IDs and a reversibility flag</li>
+  <li><b>Spec</b> &mdash; what it must do. Normative. Every line an obligation</li>
+  <li><b>Implementation Plan</b> &mdash; what, where, in what order. Executable</li>
+</ul>
+
+<div class="card">
+  <h4>The best single example for a mixed room</h4>
+  <p><span class="no">&#10007;</span> <i>The system must be fast.</i></p>
+  <p><span class="yes">&#10003;</span> <i>The system shall return search results within 300 ms at p95 for datasets under 10,000 records.</i></p>
+  <p class="src">Then the question that does the work: <b>which one can be violated?</b> Only the second. A requirement that cannot be violated is not a requirement.</p>
+</div>
+</section>
+
+<hr class="div">
+<section id="trace"><h2>4 &middot; Traceability, the part that matters</h2>
+<p class="sub">10 minutes &mdash; this is the centre of the talk. If time runs short, cut something else.</p>
+
+<p>Show the chain on one slide:</p>
+
+<div class="card">
+  <p class="chain"><code>D-01</code> &rarr; <code>TC-002</code> &rarr; <code>FR-003</code> &rarr; <code>S-04</code> &rarr; a test tagged <code>S-04</code> &rarr; the code</p>
+</div>
+
+<p>Then show what the audit returns &mdash; the five verdicts, and specifically why <code>UNVERIFIABLE</code> ranks above <code>ABSENT</code>:</p>
+
+<div class="card">
+  <p><b>"I could not check" must never be reported as "it is not there."</b></p>
+  <p class="src">That one line is what makes people trust the output, and it usually gets a reaction.</p>
+</div>
+
+<p>Then <b>the backwards sweep</b>: code that no ID sanctions. That lands harder than the forward direction, because everyone in the room has shipped something nobody specified.</p>
+</section>
+
+<hr class="div">
+<section id="real"><h2>5 &middot; Making it real</h2>
+<p class="sub">8 minutes &mdash; team audience only</p>
+
+<p>The four questions the methodology does not answer, and what one team chose:</p>
+
+<div class="scroll"><table>
+<thead><tr><th></th><th>Question</th><th>The answer that was landed on</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>What is the unit?</td><td><code>Surface | Feature &rarr; Name</code> in the ticket title. 53 tickets resolved to 18 features</td></tr>
+<tr><td>2</td><td>How does a ticket point at its documents?</td><td>Two body fields: <code>Docs</code> and <code>Satisfies</code></td></tr>
+<tr><td>3</td><td>Where do the tasks live?</td><td>Ticket for people, plan tasks for the executor. Never both</td></tr>
+<tr><td>4</td><td>What earns the full treatment?</td><td>The full pipeline on 2 or 3 features out of 18</td></tr>
+</tbody></table></div>
+
+<p><b>Spend the time on point 4.</b> It is the one that decides whether adoption survives the first month.</p>
+</section>
+
+<hr class="div">
+<section id="cost"><h2>6 &middot; Close on the honest cost</h2>
+<p class="sub">4 minutes</p>
+
+<p><b>Do not oversell.</b> State the number: <b>15,000 to 40,000 words per feature.</b> Say plainly that most work should not get this, and that a team running it on everything will quietly stop running it on anything.</p>
+
+<div class="card">
+  <p><b>A spec nobody verifies decays into fiction. A spec that gets audited is a contract. The only thing that changed is that auditing got cheap.</b></p>
+  <p class="src">The one-sentence close.</p>
+</div>
+</section>
+
+<hr class="div">
+<section id="qa"><h2>Questions to expect</h2>
+
+<div class="card">
+  <h4>"Isn't this just waterfall?"</h4>
+  <p>No, and the difference is concrete: waterfall specified the whole system once, up front. This specifies <b>one feature at a time</b>, and the Concept Note explicitly carries what is still undecided rather than pretending it is settled.</p>
+</div>
+
+<div class="card">
+  <h4>"Who writes these, product or engineering?"</h4>
+  <p>The methodology does not assign roles, only an owner and reviewers per document. In practice the Concept Note leans product, the Plan leans engineering, and <b>the Spec is where the two actually have to agree</b> &mdash; which is the point of it existing.</p>
+</div>
+
+<div class="card">
+  <h4>"What if the code and the Spec disagree?"</h4>
+  <p>That is the audit's <code>DIVERGENT</code> verdict, and it is <b>a finding, not a failure</b>. Someone decides which one is wrong. Before this existed, nobody found out at all.</p>
+</div>
+
+<div class="card">
+  <h4>"How long until we see value?"</h4>
+  <p><b>One feature.</b> The first audit on a feature you thought was finished is the demo.</p>
+</div>
+
+<div class="card">
+  <h4>"We already write tickets, isn't this duplicated?"</h4>
+  <p>A ticket is a unit of work. A Spec is a statement of obligations. They answer different questions, and the two body fields are what keep them from being two versions of the same thing.</p>
+</div>
+
+<div class="card">
+  <h4>"What does it cost us to try?"</h4>
+  <p>One feature's worth of writing, and you can stop after the first audit if the report is boring. <b>If nobody ever runs the audit, stop before you start</b> &mdash; the documents without the verification are documentation theatre, and a good ticket is cheaper.</p>
+</div>
+</section>
+
+<footer>
+  T-Gency Apps &middot; talk outline &middot; September 2026
+  <div class="met">
+    Written from <b>docs/09-talk-outline.md</b>. If this page and the markdown disagree, <b>the markdown is right and this page is stale.</b><br>
+    Licensed Apache-2.0.
+  </div>
+</footer>
+</main>
+</div>
+</body></html>

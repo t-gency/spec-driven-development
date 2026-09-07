@@ -1,0 +1,8 @@
+{
+  "name": "engineering-methodology",
+  "description": "Three-stage AI-assisted feature methodology \u2014 Concept Note, Spec, Implementation Plan \u2014 with the staged-engineering-doc skill that produces or derives any of the three documents through guided Q&A and codebase research, the three-p-visualizer skill that renders them as an interactive Product / Process / Project HTML explainer (abstraction ladder, NFR lenses, pipeline, risk matrix), the spec-answers skill that answers questions about a documented feature from its Concept Note and Spec with cited IDs and an explicit answer status, and the spec-conformance skill that audits the codebase against the Spec \u2014 forward (every obligation → file:line evidence at a pinned commit, one verdict each) and backward (code behaviour no ID sanctions).",
+  "author": {
+    "name": "TGency"
+  },
+  "version": "0.15.0"
+}

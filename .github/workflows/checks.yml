@@ -1,0 +1,75 @@
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    name: Repository and methodology gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The methodology applies its own closed-set rule to itself: when the
+      # meta-ACs (AC-50...) or the DoD gates (T-N.D1...) gain a member, every
+      # enumeration site across the four skills has to move together. This
+      # gate exists because a half-propagated closed set shipped three review
+      # rounds in a row - and a skill declaring a member its sibling does not
+      # know about reads as a silent pass.
+      - name: Closed-set consistency
+        run: |
+          chmod +x plugins/engineering-methodology/scripts/*.sh
+          plugins/engineering-methodology/scripts/closed-set-consistency.sh
+
+      # Written test-first: it passes on the current tree and catches every
+      # drift class on a deliberately broken copy. A gate with no failing
+      # test is a gate nobody has seen fail.
+      - name: Closed-set consistency - self-test
+        run: plugins/engineering-methodology/scripts/closed-set-consistency.test.sh
+
+      # The five HTML pages carry method.css inlined so each one works alone -
+      # opened off a synced folder, emailed, dropped into a chat, read offline.
+      # method.css stays the single source; this fails when a page is stale.
+      - name: Site pages carry the current stylesheet
+        run: scripts/build-site.sh --check
+
+      # Provenance, compliance claims, internal/ leakage, dead links.
+      - name: Repository gates
+        run: |
+          chmod +x scripts/*.sh
+          scripts/repo-checks.sh
+
+      # Proves the plugin mirror has not been edited without updating its
+      # record. Remove this step in a fork that has no upstream.
+      - name: Plugin mirror fingerprint
+        run: scripts/mirror-fingerprint.sh
+        # No continue-on-error: the fingerprint is recorded, so drift is a red build.
+
+      # The marketplace manifest is the whole install path. A typo here is a
+      # 404 that reads like "the plugin does not exist".
+      - name: Manifests parse
+        run: |
+          python3 -c "import json; json.load(open('.claude-plugin/marketplace.json')); print('marketplace.json ok')"
+          python3 -c "import json; json.load(open('plugins/engineering-methodology/.claude-plugin/plugin.json')); print('plugin.json ok')"
+
+      # Every skill needs front matter with a name and a description: the
+      # description is the routing table, and a skill without one never loads.
+      - name: Every skill has a name and a description
+        run: |
+          set -euo pipefail
+          status=0
+          while IFS= read -r f; do
+            fm=$(awk '/^---$/{n++; next} n==1' "$f")
+            printf '%s' "$fm" | grep -q '^name:'        || { echo "::error file=$f::missing name in front matter"; status=1; }
+            printf '%s' "$fm" | grep -q '^description:' || { echo "::error file=$f::missing description in front matter"; status=1; }
+            dir=$(basename "$(dirname "$f")")
+            nm=$(printf '%s' "$fm" | sed -n 's/^name: *//p' | head -1 | tr -d ' ')
+            [ "$dir" = "$nm" ] || { echo "::error file=$f::front-matter name $nm does not match directory $dir"; status=1; }
+          done < <(find skills plugins seeds -name SKILL.md -type f | sort)
+          exit $status

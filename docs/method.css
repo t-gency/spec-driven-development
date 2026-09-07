@@ -1,0 +1,115 @@
+/* =============================================================
+   T-Gency method reference — one content width, one call-out.
+   The width is set by the grid column, not per element, so prose,
+   cards, tables and rules share the same left and right edge.
+   ============================================================= */
+:root{
+  --bg:#08080A; --panel:#121218; --panel2:#16161D;
+  --line:#232330; --line2:#2E2E3D;
+  --tx:#E8E8F0; --tx2:#A0A0B4; --tx3:#6E6E85;
+  --purple:#8B5CF6; --blue:#3B82F6; --cyan:#22D3EE; --green:#A3E635;
+  --red:#F0506E; --amber:#F5A524;
+  --grad:linear-gradient(90deg,var(--purple),var(--blue),var(--green));
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:15.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{display:grid;grid-template-columns:236px minmax(0,1fr);max-width:1560px;margin:0 auto}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;height:100vh;overflow-y:auto;padding:28px 14px 40px;border-right:1px solid var(--line)}
+.brand{font-size:19px;font-weight:700;letter-spacing:-.02em}
+.brand span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand em{font-style:normal;color:var(--green)}
+.brandsub{font-size:11px;color:var(--tx3);letter-spacing:.09em;text-transform:uppercase;margin:2px 0 24px}
+nav a{display:block;padding:6px 10px;border-radius:6px;font-size:13.5px;color:var(--tx2);text-decoration:none}
+nav a:hover{background:var(--panel);color:var(--tx)}
+.navgrp{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--tx3);margin:20px 0 6px 10px;font-weight:600}
+nav .ext{font-size:12.5px;color:var(--tx3)}
+nav .ext:hover{color:var(--tx)}
+
+/* ---------- type ---------- */
+main{padding:0 44px 110px 46px;min-width:0}
+section{padding-top:52px;scroll-margin-top:12px}
+h1{font-size:33px;line-height:1.15;letter-spacing:-.025em;margin:0 0 10px;font-weight:700}
+h2{font-size:22px;letter-spacing:-.02em;margin:0 0 14px;font-weight:600;display:flex;align-items:center;gap:11px}
+h2::before{content:"";width:3px;height:19px;border-radius:2px;background:var(--grad);flex:none}
+h3{font-size:16px;margin:28px 0 8px;font-weight:600;letter-spacing:-.01em}
+h4{font-size:12.5px;margin:0 0 8px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--tx2)}
+p{margin:0 0 13px;color:var(--tx2);line-height:1.72}
+.lead{font-size:16.5px}
+.sub{font-size:14px;color:var(--tx3);margin:-6px 0 18px}
+ul{margin:0 0 14px;padding-left:19px;color:var(--tx2)}
+li{margin:6px 0;line-height:1.72}
+strong,b{color:var(--tx);font-weight:600}
+a{color:var(--cyan)}
+code{font:12.5px var(--mono);background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--cyan);border:1px solid var(--line)}
+hr{border:0;border-top:1px solid var(--line);margin:42px 0 0}
+/* the grid column owns the measure, not the element */
+main p,main ul,main ol,main li,main div,main table,main section,main hr,
+main header,main h1,main h2,main h3,main h4,footer{max-width:none}
+
+/* ---------- header ---------- */
+header{padding:44px 0 28px;border-bottom:1px solid var(--line)}
+.meta{display:flex;gap:22px;flex-wrap:wrap;font-size:12.5px;color:var(--tx3);margin-top:18px}
+.meta b{color:var(--tx2);font-weight:500}
+
+/* ---------- the one call-out ----------
+   There used to be five frames. Five frames make a reader think each
+   one is a different kind of information, when the argument simply
+   continues. Two formats in the whole document: plain text, and this. */
+.card,.note{
+  background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  padding:16px 18px;margin:14px 0;font-size:14px;color:var(--tx2)
+}
+.card h4,.note h4{
+  margin:0 0 9px;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--tx3);font-weight:700
+}
+.card p:last-child,.card ul:last-child,.note p:last-child{margin-bottom:0}
+.card b,.note b{color:var(--tx)}
+/* the closing line of a call-out: same frame, less weight */
+.card .src,.note .src{font-size:12.5px;color:var(--tx3);margin-top:10px;margin-bottom:0}
+.src{font-size:11.5px;color:var(--tx3)}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:11px;background:var(--panel);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);font-weight:600;padding:12px 13px 8px;border-bottom:1px solid var(--line2);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--tx2);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:0}
+td p,td ul{max-width:none}
+
+/* ---------- inline status ---------- */
+.pill{display:inline-flex;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:20px;border:1px solid;white-space:nowrap}
+.p-red{color:#FF8FA3;border-color:#5C1F2E;background:#2A0F17}
+.p-amb{color:#FFC978;border-color:#5C4318;background:#2A1F0C}
+.p-blu{color:#8FC5FF;border-color:#1E3A5C;background:#0D1B2A}
+.p-gry{color:var(--tx2);border-color:var(--line2);background:var(--panel2)}
+.p-pur{color:#C4A8FF;border-color:#3D2A5C;background:#190F2A}
+.yes{color:var(--green)}.no{color:var(--red)}.part{color:var(--amber)}
+
+/* ---------- checked list ---------- */
+.tick{list-style:none;padding:0;margin:0 0 6px}
+.tick li{padding-left:20px;position:relative;margin:6px 0;font-size:14px}
+.tick li::before{position:absolute;left:0;font-weight:700}
+.tick li.y::before{content:"\2713";color:var(--green)}
+.tick li.p::before{content:"~";color:var(--amber);font-size:16px;top:-2px}
+.tick li.n::before{content:"\2715";color:var(--red);font-size:12px;top:2px}
+
+/* ---------- chain / code block ---------- */
+.chain{font:12.5px/1.9 var(--mono);color:var(--tx2);margin:0}
+.chain code{background:none;border:0;padding:0}
+
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--tx3)}
+footer .met{margin-top:10px;font-size:11.5px;line-height:1.8}
+footer .met b{color:var(--tx2);font-weight:500}
+
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  main{padding:0 20px 80px}
+  h1{font-size:26px}
+}
