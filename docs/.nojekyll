@@ -1,0 +1,1 @@
+GitHub Pages runs Jekyll by default on a branch deploy. This site is hand-written HTML: there is nothing to build, and a Jekyll pass would silently skip anything starting with an underscore and try to interpret template braces in the markdown. This empty file turns it off, so the files are served exactly as they are in docs/.
