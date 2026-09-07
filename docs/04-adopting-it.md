@@ -83,14 +83,29 @@ The hardest question, and the methodology gives no answer: it has no guidance on
 it. That gap has to be filled locally or the team will either run it on everything, and stop, or
 on nothing.
 
-t-gency Apps derived the answer from what was blocking each ticket:
+**Ask the question of the feature, never of the ticket.** That one move is what makes the rest
+work, and it is the correction we had to make: an earlier version derived the answer from what was
+blocking each *ticket*, which quietly created a state where a ticket sat on the board waiting for a
+document nobody had started.
 
-| Ticket state | What runs |
-|---|---|
-| Blocked on an external platform contract | **Nothing.** It needs a contract from another team, not a Spec from us |
-| Blocked on a decision | **Concept Note only.** "Why and in what direction" is exactly that document |
-| Blocked on a specification | **Concept + Spec.** The Plan only if it enters this release |
-| Not blocked | **Nothing.** Direct path |
+Three paths, and the template decides which:
+
+| Path | What runs | Where the issues come from |
+|---|---|---|
+| **Spec** | Concept Note, then Spec. The Plan only if it enters the release | Out of the approved Spec: one per user story, `P1` `P2` `P3` |
+| **Direct** | **Nothing** | Straight onto the board: a defect against specified behaviour, or internal work with no user surface |
+| **Platform request** | **Nothing from us** | It needs a contract from the platform team, not a Spec. It carries a `blocked:` label and does not count toward the release forecast |
+
+**There is no fourth case where a ticket waits on a document that does not exist.** Asking the
+question of the feature is what prevents it. What can still block an issue *once it exists* is a
+missing mock-up or an unresolved platform dependency — one label each — and an issue carrying any
+`blocked:` label does not enter refinement.
+
+> **Where we diverge from [spec-kit](https://github.com/github/spec-kit).** It ships a
+> `tasks-to-issues` command: the artifacts come first and the issues are generated last, which is
+> the same direction as this. It goes one step further and builds them from the Plan's *tasks*.
+> **We stop at the user story.** The tasks belong to an agent and the story belongs to a person,
+> and putting the tasks on the board gives you two task systems that drift within a sprint.
 
 Result: the full three-document pipeline on **2 or 3 features out of 18**. The rest get a
 well-written ticket.

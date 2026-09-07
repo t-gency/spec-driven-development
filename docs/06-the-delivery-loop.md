@@ -40,11 +40,20 @@ part of the Spec:
 
 | Role | Shapes | Lands as |
 |---|---|---|
-| **Product** | The WHY and the scope | `D-*`, scope |
+| **Product** | The WHY and the scope | `D-*`, scope — **and co-authors `FR-*`** |
+| **UX** | The experience | `FR-*`, and owns the scenarios, variants and accessibility |
 | **Engineering** | Feasibility and how it gets built | `TC-*`, the Plan |
-| **UX** | The experience | `FR-*`, scenarios, accessibility |
 | **Security** | Threats, data, posture | `NFR-*`, `TC-*` |
 | **Test / QA** | What automated tests will prove | `S-*` variants, `AC-*` |
+
+**The `FR-*` row is a correction.** The table as first adopted gave functional requirements to UX
+alone. But a functional requirement is *the scope translated into behaviour a test can check* —
+which makes Product an author there too, not a reviewer. UX stays the owner of the scenarios, the
+variants and accessibility.
+
+That distinction is not academic. When `FR-*` belongs to UX alone, Product signs off on
+requirements it did not write, and the first place the gap shows is the audit — as a `DIVERGENT`
+verdict on behaviour that was never what anyone meant.
 
 Iterate until aligned, not one-shot. The output is a Concept Note and Spec that already carry the
 functional, experience, security and test obligations, instead of discovering three of the four in
@@ -57,20 +66,55 @@ authors from the start prevent them.
 
 Every step is a plain-language instruction to a coding agent. You do not type skill names.
 
-| | Step | What happens |
-|---|---|---|
-| 1 | **Issue** | One per independently deliverable user story, on the board |
-| 2 | **Concept Note** | The WHY, via guided Q&A plus codebase research |
-| 3 | **Spec** | The WHAT: `FR-*` in EARS, every scenario with its variants |
-| 4 | **Plan** | Exact paths, a stacked-branch arc behind a flag, the traceability matrix |
-| 5 | **Implement** | Autonomous. Commit locally; **do not push** |
-| 6 | **Verify** | Bring it up on localhost. Show Product the prototype |
-| 7 | **Completeness** | After sign-off: the deferred `NFR-*` and `TC-*`, remaining variants |
-| 8 | **Pre-PR gate** | Four checks, all before anything goes up |
-| 9 | **Open PRs** | Stacked, each linked to its issue, the last one `Closes #NNN` |
-| 10 | **Watch to merge** | A background loop keeps the stack green until it is ready |
+| | Step | Who | What happens |
+|---|---|---|---|
+| 1 | **Concept Note** | Product, iterated with the team | The WHY and the direction. `concept-note.md`, with its `D-*` decisions |
+| 2 | **Spec** | Product · UX · Engineering · Security · QA | The WHAT: `FR-*` `S-*` `AC-*`, with `NFR-*` and `TC-*` **captured**. And the split into user stories: `P1` `P2` `P3` |
+| ↓ | *approved — four signatures* | | Nothing downstream starts from an unapproved Spec |
+| 3 | **Issues** | Product | **One per user story, out of the approved Spec.** `Docs:` the feature folder · `Satisfies:` its own IDs |
+| 4 | **Implementation Plan** | Engineering | Real paths, the branch arc, the scenario → test matrix |
+| 5 | **Implement** | Coding agent, autonomous | Commits locally, behind a feature flag. Nothing is pushed, so the session can run unattended |
+| 6 | **Verify on localhost** | Engineering + Product | The happy path, working in a browser. That is the whole bar for Phase 1 |
+| **⏸** | **Product signs off on the prototype** | Product | **Phase 2 does not start before this** |
+| 7 | **Completeness** | Engineering + Security | The deferred `NFR-*` and `TC-*` get built, plus the remaining scenario variants |
+| 8 | **Pre-PR gate** | Engineering + Security | Four checks — conformance, end-to-end, docs, security — all before anything goes up |
+| 9 | **Open stacked PRs** | Engineering | One per branch in the arc, each linked to the issue. Only the last carries `Closes #NNN` |
+| 10 | **Watch to merge** | Background agent loop | Merge bottom-up, keeping every branch current. It pings you when the stack is green |
 
 Steps 1 to 6 are Phase 1. Steps 7 to 10 are Phase 2.
+
+```mermaid
+flowchart TD
+    CN["1 · Concept Note<br/>the WHY · D-*"]
+    SP["2 · Spec<br/>FR-* S-* AC-* · NFR-* TC-* captured<br/>user stories P1 P2 P3"]
+    IS["3 · Issues<br/>one per user story"]
+    DX["direct path<br/>a bug, or internal work"]
+    PL["4 · Implementation Plan"]
+    IM["5 · Implement<br/>local commits, nothing pushed"]
+    VE["6 · Verify on localhost"]
+    GA{"Product signs off<br/>on the prototype"}
+    CO["7 · Completeness<br/>deferred NFR-* TC-*"]
+    PG["8 · Pre-PR gate"]
+    OP["9 · Open stacked PRs"]
+    WM["10 · Watch to merge"]
+
+    CN --> SP
+    SP -->|approved · four signatures| IS
+    DX -.-> IS
+    IS --> PL --> IM --> VE --> GA --> CO --> PG --> OP --> WM
+    SP -.->|audits the code against FR-* S-* AC-*| PG
+```
+
+### Two changes worth naming
+
+**The issues come out of the approved Spec, not before it.** They used to be step 1, which put a
+ticket on the board describing work nobody had specified yet — and then the board waited for a
+document that did not exist. Deriving them from the Spec removes that state entirely: an issue
+exists because a user story exists, and the user story exists because the Spec says so.
+
+**The split into `P1` `P2` `P3` lives in the Spec.** That is where the argument about what is
+independently shippable belongs, with the requirements in front of everyone, rather than in a
+refinement meeting three weeks later with only the ticket titles to go on.
 
 ### The prompts that drive it
 

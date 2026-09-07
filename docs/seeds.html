@@ -123,6 +123,53 @@ footer .met b{color:var(--tx2);font-weight:500}
   main{padding:0 20px 80px}
   h1{font-size:26px}
 }
+
+/* ---------- figures ----------
+   The delivery loop is a CSS grid rather than SVG: it is mostly text, and text
+   in a grid stays selectable, searchable and responsive. The roles figure IS
+   an SVG, because its claim is the two crossing edges - which prose cannot
+   show and a table flattens. */
+figure{margin:20px 0 8px}
+figcaption{font-size:12.5px;color:var(--tx3);margin-top:10px;line-height:1.65}
+figcaption b{color:var(--tx2)}
+
+.loop{display:grid;gap:11px}
+.band{border:1px solid var(--line);border-radius:12px;padding:15px 17px;background:#0C0C11;display:grid;gap:11px}
+.bandlabel{font:600 10.5px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase}
+.b1 .bandlabel{color:var(--purple)}
+.b2 .bandlabel{color:var(--green)}
+
+.step{display:grid;grid-template-columns:160px minmax(140px,1fr) minmax(0,1.45fr);gap:16px;align-items:start}
+.who{font-size:11.5px;color:var(--tx3);text-align:right;padding-top:12px;line-height:1.45}
+.who i{display:block;font-style:normal;color:#50506A;font-size:10.5px}
+.node{position:relative;border:1px solid var(--line2);border-radius:9px;background:var(--panel);
+      padding:11px 14px;display:flex;gap:11px;align-items:baseline}
+.node .n{font:600 10.5px var(--mono);color:var(--tx3);flex:none}
+.node .t{font-size:14.5px;font-weight:600;color:var(--tx)}
+.node.hot{border-color:var(--purple)}
+.step:not(:last-child) .node::after{content:"";position:absolute;left:50%;top:calc(100% + 1px);
+      width:1px;height:11px;background:var(--line2)}
+.ann{font-size:12.5px;color:var(--tx2);padding-top:8px;line-height:1.6}
+.ann em{display:block;font-style:normal;color:var(--tx3);font-size:11.5px;margin-top:1px}
+.ann .f{font:11.5px var(--mono);color:var(--cyan)}
+.sig{grid-column:2/4;font-size:11.5px;color:var(--amber);padding-left:2px;margin:-4px 0}
+.direct{border:1px dashed var(--line2);border-radius:8px;padding:8px 10px;background:transparent;
+        text-align:left;color:var(--tx3);font-size:11.5px;line-height:1.4}
+.direct b{display:block;font:600 9.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;
+          color:#50506A;margin-bottom:3px}
+.gate{border:1px solid #5C4318;background:#1A1206;border-radius:11px;padding:12px 16px;
+      display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.gate .g{font:700 9.5px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--amber)}
+.gate .t{font-size:15px;font-weight:600;color:var(--tx)}
+.gate .x{font-size:12.5px;color:#C9A25E}
+.rail{border-left:2px dashed #1E5C6B;padding:2px 0 2px 14px;margin:2px 0 0;font-size:12.5px;color:var(--tx3)}
+.rail b{color:var(--cyan);font-weight:600}
+
+@media(max-width:820px){
+  .step{grid-template-columns:1fr}
+  .who{text-align:left;padding-top:0}
+  .sig{grid-column:1}
+}
 </style>
 </head><body>
 <div class="wrap">

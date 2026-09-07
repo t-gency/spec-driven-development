@@ -123,6 +123,53 @@ footer .met b{color:var(--tx2);font-weight:500}
   main{padding:0 20px 80px}
   h1{font-size:26px}
 }
+
+/* ---------- figures ----------
+   The delivery loop is a CSS grid rather than SVG: it is mostly text, and text
+   in a grid stays selectable, searchable and responsive. The roles figure IS
+   an SVG, because its claim is the two crossing edges - which prose cannot
+   show and a table flattens. */
+figure{margin:20px 0 8px}
+figcaption{font-size:12.5px;color:var(--tx3);margin-top:10px;line-height:1.65}
+figcaption b{color:var(--tx2)}
+
+.loop{display:grid;gap:11px}
+.band{border:1px solid var(--line);border-radius:12px;padding:15px 17px;background:#0C0C11;display:grid;gap:11px}
+.bandlabel{font:600 10.5px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase}
+.b1 .bandlabel{color:var(--purple)}
+.b2 .bandlabel{color:var(--green)}
+
+.step{display:grid;grid-template-columns:160px minmax(140px,1fr) minmax(0,1.45fr);gap:16px;align-items:start}
+.who{font-size:11.5px;color:var(--tx3);text-align:right;padding-top:12px;line-height:1.45}
+.who i{display:block;font-style:normal;color:#50506A;font-size:10.5px}
+.node{position:relative;border:1px solid var(--line2);border-radius:9px;background:var(--panel);
+      padding:11px 14px;display:flex;gap:11px;align-items:baseline}
+.node .n{font:600 10.5px var(--mono);color:var(--tx3);flex:none}
+.node .t{font-size:14.5px;font-weight:600;color:var(--tx)}
+.node.hot{border-color:var(--purple)}
+.step:not(:last-child) .node::after{content:"";position:absolute;left:50%;top:calc(100% + 1px);
+      width:1px;height:11px;background:var(--line2)}
+.ann{font-size:12.5px;color:var(--tx2);padding-top:8px;line-height:1.6}
+.ann em{display:block;font-style:normal;color:var(--tx3);font-size:11.5px;margin-top:1px}
+.ann .f{font:11.5px var(--mono);color:var(--cyan)}
+.sig{grid-column:2/4;font-size:11.5px;color:var(--amber);padding-left:2px;margin:-4px 0}
+.direct{border:1px dashed var(--line2);border-radius:8px;padding:8px 10px;background:transparent;
+        text-align:left;color:var(--tx3);font-size:11.5px;line-height:1.4}
+.direct b{display:block;font:600 9.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;
+          color:#50506A;margin-bottom:3px}
+.gate{border:1px solid #5C4318;background:#1A1206;border-radius:11px;padding:12px 16px;
+      display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.gate .g{font:700 9.5px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--amber)}
+.gate .t{font-size:15px;font-weight:600;color:var(--tx)}
+.gate .x{font-size:12.5px;color:#C9A25E}
+.rail{border-left:2px dashed #1E5C6B;padding:2px 0 2px 14px;margin:2px 0 0;font-size:12.5px;color:var(--tx3)}
+.rail b{color:var(--cyan);font-weight:600}
+
+@media(max-width:820px){
+  .step{grid-template-columns:1fr}
+  .who{text-align:left;padding-top:0}
+  .sig{grid-column:1}
+}
 </style>
 </head><body>
 <div class="wrap">
@@ -298,7 +345,23 @@ footer .met b{color:var(--tx2);font-weight:500}
 
 <h3>4 &middot; What earns the full treatment?</h3>
 <p class="sub">the hardest one</p>
-<p>The methodology gives no criterion for when <i>not</i> to use it. We derived ours from what blocks each ticket: a platform contract runs nothing, a pending decision runs the Concept Note only, a missing spec runs Concept plus Spec, and everything else takes the direct path. Result: <b>the full pipeline on 2 or 3 features out of 18</b>.</p>
+<p><b>Ask the question of the feature, never of the ticket.</b> That one move is what makes the rest work, and it is a correction: an earlier version derived the answer from what was blocking each <i>ticket</i>, which quietly created a state where a ticket sat on the board waiting for a document nobody had started.</p>
+
+<div class="scroll"><table>
+<thead><tr><th>Path</th><th>What runs</th><th>Where the issues come from</th></tr></thead>
+<tbody>
+<tr><td><b>Spec</b></td><td>Concept Note, then Spec. The Plan only if it enters the release</td><td>Out of the approved Spec: one per user story, <code>P1</code> <code>P2</code> <code>P3</code></td></tr>
+<tr><td><b>Direct</b></td><td><b>Nothing</b></td><td>Straight onto the board: a defect against specified behaviour, or internal work with no user surface</td></tr>
+<tr><td><b>Platform request</b></td><td><b>Nothing from us</b></td><td>It needs a contract from the platform team, not a Spec. It carries a <code>blocked:</code> label and does not count toward the release forecast</td></tr>
+</tbody></table></div>
+
+<p><b>There is no fourth case where a ticket waits on a document that does not exist.</b> Asking the question of the feature is what prevents it. What can still block an issue <i>once it exists</i> is a missing mock-up or an unresolved platform dependency &mdash; one label each &mdash; and an issue carrying any <code>blocked:</code> label does not enter refinement. Result: <b>the full pipeline on 2 or 3 features out of 18</b>.</p>
+
+<div class="card">
+  <h4>Where we diverge from spec-kit</h4>
+  <p><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">spec-kit</a> ships a <code>tasks-to-issues</code> command: the artifacts come first and the issues are generated last, which is the same direction as this. It goes one step further and builds them from the Plan's <i>tasks</i>. <b>We stop at the user story.</b></p>
+  <p class="src">The tasks belong to an agent and the story belongs to a person. Putting the tasks on the board gives you two task systems that drift within a sprint.</p>
+</div>
 
 <div class="card">
   <h4>The honest cost</h4>
@@ -425,35 +488,168 @@ footer .met b{color:var(--tx2);font-weight:500}
 
 <p><b>The non-functional requirements are written into the Spec in Phase 1; they are just not built yet.</b> They are not discovered later and they are not optional. Deferring the work is not the same as deferring the decision, and conflating the two is how "we'll add security later" happens.</p>
 
-<div class="card">
-  <h4>Defining the WHAT is a team sport</h4>
-  <p>Product owns the WHY and the scope. Everyone else shapes it, and each role lands in a different family of IDs:</p>
-  <ul>
-    <li><b>Product</b> &rarr; <code>D-*</code>, scope</li>
-    <li><b>Engineering</b> &rarr; <code>TC-*</code>, the Plan</li>
-    <li><b>UX</b> &rarr; <code>FR-*</code>, scenarios, accessibility</li>
-    <li><b>Security</b> &rarr; <code>NFR-*</code>, <code>TC-*</code></li>
-    <li><b>Test / QA</b> &rarr; <code>S-*</code> variants, <code>AC-*</code></li>
-  </ul>
-  <p class="src">Stronger than an approval gate: four signatures at the end catch problems late; four authors from the start prevent them.</p>
+<h3>Who authors the WHAT</h3>
+<p class="sub">Product owns the WHY and the scope; everyone else shapes it, and each role lands in a different part of the Spec. Four authors from the start beat four signatures at the end.</p>
+
+<figure>
+<svg viewBox="0 0 760 300" role="img" aria-label="Five roles on the left connect to the ID families they author on the right. Product connects to decisions and, by a highlighted edge, also to functional requirements. UX connects to functional requirements. Engineering connects to technical constraints. Security connects to non-functional requirements and, by a crossing edge, also to technical constraints. Test and QA connect to scenario variants and acceptance criteria." style="max-width:100%;height:auto;font-family:Inter,system-ui,sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6E6E85"/>
+    </marker>
+    <marker id="arg" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#A3E635"/>
+    </marker>
+  </defs>
+
+  <text x="8" y="12" fill="#6E6E85" font-size="9.5" letter-spacing="1.4" font-family="ui-monospace,Menlo,monospace">ROLE</text>
+  <text x="392" y="12" fill="#6E6E85" font-size="9.5" letter-spacing="1.4" font-family="ui-monospace,Menlo,monospace">LANDS IN THE SPEC AS</text>
+
+  <g stroke="#6E6E85" stroke-width="1" fill="none" marker-end="url(#ar)">
+    <path d="M216,46 H384"/>
+    <path d="M216,102 H384"/>
+    <path d="M216,158 H384"/>
+    <path d="M216,214 H384"/>
+    <path d="M216,214 C296,214 304,158 384,158"/>
+    <path d="M216,270 H384"/>
+  </g>
+  <path d="M216,46 C296,46 304,102 384,102" stroke="#A3E635" stroke-width="1.6" fill="none" marker-end="url(#arg)"/>
+
+  <g>
+    <rect x="8" y="28" width="208" height="36" rx="8" fill="#121218" stroke="#2E2E3D"/>
+    <text x="24" y="51" fill="#E8E8F0" font-size="13.5" font-weight="600">Product</text>
+
+    <rect x="8" y="84" width="208" height="36" rx="8" fill="#121218" stroke="#232330"/>
+    <text x="24" y="107" fill="#E8E8F0" font-size="13.5" font-weight="600">UX</text>
+
+    <rect x="8" y="140" width="208" height="36" rx="8" fill="#121218" stroke="#232330"/>
+    <text x="24" y="163" fill="#E8E8F0" font-size="13.5" font-weight="600">Engineering</text>
+
+    <rect x="8" y="196" width="208" height="36" rx="8" fill="#121218" stroke="#232330"/>
+    <text x="24" y="219" fill="#E8E8F0" font-size="13.5" font-weight="600">Security</text>
+
+    <rect x="8" y="252" width="208" height="36" rx="8" fill="#121218" stroke="#232330"/>
+    <text x="24" y="275" fill="#E8E8F0" font-size="13.5" font-weight="600">Test / QA</text>
+  </g>
+
+  <g>
+    <rect x="384" y="26" width="368" height="40" rx="8" fill="#121218" stroke="#232330"/>
+    <text x="400" y="45" fill="#22D3EE" font-size="12" font-family="ui-monospace,Menlo,monospace">D-*</text>
+    <text x="432" y="45" fill="#E8E8F0" font-size="12.5">decisions, and the scope</text>
+    <text x="400" y="60" fill="#6E6E85" font-size="11">what the feature is for, and what it is not</text>
+
+    <rect x="384" y="82" width="368" height="40" rx="8" fill="#121218" stroke="#A3E635"/>
+    <text x="400" y="101" fill="#22D3EE" font-size="12" font-family="ui-monospace,Menlo,monospace">FR-*</text>
+    <text x="440" y="101" fill="#E8E8F0" font-size="12.5">requirements and scenarios</text>
+    <text x="400" y="116" fill="#A3E635" font-size="11">co-authored: scope becomes verifiable behaviour here</text>
+
+    <rect x="384" y="138" width="368" height="40" rx="8" fill="#121218" stroke="#232330"/>
+    <text x="400" y="157" fill="#22D3EE" font-size="12" font-family="ui-monospace,Menlo,monospace">TC-*</text>
+    <text x="440" y="157" fill="#E8E8F0" font-size="12.5">technical constraints, the Plan</text>
+    <text x="400" y="172" fill="#6E6E85" font-size="11">feasibility, and how it actually gets built</text>
+
+    <rect x="384" y="194" width="368" height="40" rx="8" fill="#121218" stroke="#232330"/>
+    <text x="400" y="213" fill="#22D3EE" font-size="12" font-family="ui-monospace,Menlo,monospace">NFR-*</text>
+    <text x="450" y="213" fill="#E8E8F0" font-size="12.5">threats, data, posture</text>
+    <text x="400" y="228" fill="#6E6E85" font-size="11">named in Phase 1, built in Phase 2</text>
+
+    <rect x="384" y="250" width="368" height="40" rx="8" fill="#121218" stroke="#232330"/>
+    <text x="400" y="269" fill="#22D3EE" font-size="12" font-family="ui-monospace,Menlo,monospace">S-*</text>
+    <text x="432" y="269" fill="#E8E8F0" font-size="12.5">variants, and</text>
+    <text x="518" y="269" fill="#22D3EE" font-size="12" font-family="ui-monospace,Menlo,monospace">AC-*</text>
+    <text x="400" y="284" fill="#6E6E85" font-size="11">what an automated test will prove</text>
+  </g>
+</svg>
+
+<figcaption><b>The green edge is the correction.</b> The role table as first adopted assigned <code>FR-*</code> to UX alone. But a functional requirement is <i>the scope translated into behaviour a test can check</i>, which makes Product an author there too &mdash; not a reviewer. UX stays the owner of the scenarios, the variants and accessibility. When <code>FR-*</code> belongs to UX alone, Product signs off on requirements it did not write, and the first place that gap shows is the audit, as a <code>DIVERGENT</code> verdict on behaviour that was never what anyone meant. <b>The grey crossing edge is the other one worth seeing:</b> Security authors <code>TC-*</code> alongside Engineering, which is why a security constraint is a constraint on the solution rather than a test bolted on at the end.</figcaption>
+</figure>
+
+<h3>The ten steps</h3>
+<p class="sub">Each one a plain-language instruction to a coding agent. Steps 1 to 6 are Phase 1; 7 to 10 are Phase 2.</p>
+
+<figure>
+<div class="loop">
+
+  <div class="band b1">
+    <div class="bandlabel">Phase 1 &middot; Prototype</div>
+
+    <div class="step">
+      <div class="who">Product<i>iterated with the team</i></div>
+      <div class="node"><span class="n">1</span><span class="t">Concept Note</span></div>
+      <div class="ann"><span class="f">concept-note.md</span><em>the WHY and the direction &middot; <code>D-*</code> decisions</em></div>
+    </div>
+
+    <div class="step">
+      <div class="who">Product &middot; UX &middot; Eng<i>Security &middot; QA</i></div>
+      <div class="node hot"><span class="n">2</span><span class="t">Spec</span></div>
+      <div class="ann"><span class="f">spec.md</span><em>the WHAT &mdash; <code>FR-*</code> <code>S-*</code> <code>AC-*</code>, and <code>NFR-*</code> <code>TC-*</code> captured<br>and the split into user stories: <code>P1</code> <code>P2</code> <code>P3</code></em></div>
+      <div class="sig">approved &middot; four signatures</div>
+    </div>
+
+    <div class="step">
+      <div class="who"><div class="direct"><b>direct path</b>a bug, or internal work</div></div>
+      <div class="node"><span class="n">3</span><span class="t">Issues</span></div>
+      <div class="ann">One per user story, out of the approved Spec<em><code>Docs:</code> the feature folder &middot; <code>Satisfies:</code> its own IDs</em></div>
+    </div>
+
+    <div class="step">
+      <div class="who">Engineering</div>
+      <div class="node"><span class="n">4</span><span class="t">Implementation Plan</span></div>
+      <div class="ann"><span class="f">implementation-plan.md</span><em>real paths &middot; branch arc &middot; scenario &rarr; test matrix</em></div>
+    </div>
+
+    <div class="step">
+      <div class="who">Coding agent, autonomous</div>
+      <div class="node"><span class="n">5</span><span class="t">Implement</span></div>
+      <div class="ann">Commits locally, behind a feature flag<em>nothing is pushed, so the session can run unattended</em></div>
+    </div>
+
+    <div class="step">
+      <div class="who">Engineering + Product</div>
+      <div class="node"><span class="n">6</span><span class="t">Verify on localhost</span></div>
+      <div class="ann">The happy path, working in a browser<em>that is the whole bar for Phase 1</em></div>
+    </div>
+  </div>
+
+  <div class="gate">
+    <span class="g">Gate</span>
+    <span class="t">Product signs off on the prototype</span>
+    <span class="x">Phase 2 does not start before this</span>
+  </div>
+
+  <div class="band b2">
+    <div class="bandlabel">Phase 2 &middot; Completeness</div>
+
+    <div class="step">
+      <div class="who">Engineering + Security</div>
+      <div class="node"><span class="n">7</span><span class="t">Completeness</span></div>
+      <div class="ann">The deferred <code>NFR-*</code> and <code>TC-*</code> get built<em>plus the remaining scenario variants</em></div>
+    </div>
+
+    <div class="step">
+      <div class="who">Engineering + Security</div>
+      <div class="node"><span class="n">8</span><span class="t">Pre-PR gate</span></div>
+      <div class="ann">Four checks: conformance, end-to-end, docs, security<em>all four before anything goes up</em></div>
+    </div>
+
+    <div class="step">
+      <div class="who">Engineering</div>
+      <div class="node"><span class="n">9</span><span class="t">Open stacked PRs</span></div>
+      <div class="ann">One per branch in the arc, each linked to the issue<em>only the last one carries <code>Closes #NNN</code></em></div>
+    </div>
+
+    <div class="step">
+      <div class="who">Background agent loop</div>
+      <div class="node"><span class="n">10</span><span class="t">Watch to merge</span></div>
+      <div class="ann">Merge bottom-up, keeping every branch current<em>it pings you when the stack is green</em></div>
+    </div>
+  </div>
+
+  <p class="rail"><b>The conformance audit spans steps 2 to 8.</b> The Spec is the denominator, and the pre-PR gate is where it is finally enforced &mdash; every <code>FR-*</code>, <code>S-*</code> and <code>AC-*</code> checked against the code that claims to satisfy it.</p>
 </div>
 
-<p>Ten steps, each a plain-language instruction to a coding agent. Steps 1 to 6 are Phase 1; 7 to 10 are Phase 2.</p>
-
-<div class="scroll"><table>
-<thead><tr><th>#</th><th>Step</th><th>What happens</th></tr></thead>
-<tbody>
-<tr><td>1</td><td><b>Issue</b></td><td>One per independently deliverable user story, on the board, with the required fields</td></tr>
-<tr><td>2</td><td><b>Concept Note</b></td><td>The WHY, via guided Q&amp;A plus codebase research</td></tr>
-<tr><td>3</td><td><b>Spec</b></td><td>The WHAT: <code>FR-*</code> in EARS, every scenario with its variants</td></tr>
-<tr><td>4</td><td><b>Plan</b></td><td>Exact paths, a stacked-branch arc behind a flag, the traceability matrix</td></tr>
-<tr><td>5</td><td><b>Implement</b></td><td>Autonomous. Commit locally; <b>do not push</b></td></tr>
-<tr><td>6</td><td><b>Verify</b></td><td>Bring it up on localhost. Show Product the prototype</td></tr>
-<tr><td>7</td><td><b>Completeness</b></td><td>After sign-off: deferred <code>NFR-*</code> and <code>TC-*</code>, remaining variants</td></tr>
-<tr><td>8</td><td><b>Pre-PR gate</b></td><td>Four checks, all before anything goes up</td></tr>
-<tr><td>9</td><td><b>Open PRs</b></td><td>Stacked, each linked to its issue, the last one <code>Closes #NNN</code></td></tr>
-<tr><td>10</td><td><b>Watch to merge</b></td><td>A background loop keeps the stack green until it is ready</td></tr>
-</tbody></table></div>
+<figcaption><b>Two things changed here.</b> The issues are step 3, derived from the approved Spec &mdash; they used to be step 1, which put a ticket on the board describing work nobody had specified, and then the board waited for a document that did not exist. And the split into <code>P1</code> <code>P2</code> <code>P3</code> happens in the Spec, where the argument about what is independently shippable belongs, rather than in a refinement meeting with only ticket titles to go on.</figcaption>
+</figure>
 
 <div class="card">
   <h4>The prompts that drive it</h4>
