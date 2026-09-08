@@ -16,6 +16,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # One chmod for everything, before anything runs. The previous version
+      # chmod'd inside the step that used each script, so a step added later
+      # inherited no permission and failed with exit 126 - "permission denied"
+      # reported as a five-second job failure with no useful message.
+      # Every script below is also invoked through `bash`, which ignores the
+      # executable bit entirely, so the order of these steps stops mattering.
+      - name: Make scripts executable
+        run: chmod +x scripts/*.sh plugins/engineering-methodology/scripts/*.sh
+
       # The methodology applies its own closed-set rule to itself: when the
       # meta-ACs (AC-50...) or the DoD gates (T-N.D1...) gain a member, every
       # enumeration site across the four skills has to move together. This
@@ -23,32 +32,28 @@ jobs:
       # rounds in a row - and a skill declaring a member its sibling does not
       # know about reads as a silent pass.
       - name: Closed-set consistency
-        run: |
-          chmod +x plugins/engineering-methodology/scripts/*.sh
-          plugins/engineering-methodology/scripts/closed-set-consistency.sh
+        run: bash plugins/engineering-methodology/scripts/closed-set-consistency.sh
 
       # Written test-first: it passes on the current tree and catches every
       # drift class on a deliberately broken copy. A gate with no failing
       # test is a gate nobody has seen fail.
       - name: Closed-set consistency - self-test
-        run: plugins/engineering-methodology/scripts/closed-set-consistency.test.sh
+        run: bash plugins/engineering-methodology/scripts/closed-set-consistency.test.sh
 
       # The five HTML pages carry method.css inlined so each one works alone -
       # opened off a synced folder, emailed, dropped into a chat, read offline.
       # method.css stays the single source; this fails when a page is stale.
       - name: Site pages carry the current stylesheet
-        run: scripts/build-site.sh --check
+        run: bash scripts/build-site.sh --check
 
       # Provenance, compliance claims, internal/ leakage, dead links.
       - name: Repository gates
-        run: |
-          chmod +x scripts/*.sh
-          scripts/repo-checks.sh
+        run: bash scripts/repo-checks.sh
 
       # Proves the plugin mirror has not been edited without updating its
       # record. Remove this step in a fork that has no upstream.
       - name: Plugin mirror fingerprint
-        run: scripts/mirror-fingerprint.sh
+        run: bash scripts/mirror-fingerprint.sh
         # No continue-on-error: the fingerprint is recorded, so drift is a red build.
 
       # The marketplace manifest is the whole install path. A typo here is a

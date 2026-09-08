@@ -170,11 +170,17 @@ figcaption b{color:var(--tx2)}
   .who{text-align:left;padding-top:0}
   .sig{grid-column:1}
 }
+
+/* ---------- brand ---------- */
+.brand{display:block;text-decoration:none;margin-bottom:2px}
+.brand img{display:block;width:120px;height:auto;margin:0 0 8px}
+.brand span{display:block;font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--tx)}
+.brand:hover span{color:var(--green)}
 </style>
 </head><body>
 <div class="wrap">
 <nav>
-  <div class="brand">T-Gency <em>&#9654;</em> Method</div>
+  <a class="brand" href="index.html"><img src="assets/tgency-logo.png" alt="T-Gency" width="120"><span>Method</span></a>
   <div class="brandsub">Spec-Driven Development</div>
 
   <div class="navgrp">Sections</div>
@@ -670,6 +676,106 @@ figcaption b{color:var(--tx2)}
 <hr class="div">
 <section id="branching"><h2>7 &middot; Branching and PRs</h2>
 <p class="sub">Four long-lived branches, each bound to an environment and a publish channel.</p>
+
+<figure>
+<div class="scroll" style="padding:4px 6px">
+<svg viewBox="0 0 1040 392" role="img" aria-label="A git graph across five lanes. Develop branches from main at version 1.0. Two feature branches dip below develop and squash back into it. A release branch is cut from develop, takes two candidate fixes, and each of those is forwarded back down to develop; when ready the release branch merges into main, which is tagged version 1.1. A hotfix then branches from main, is verified on its own pull request, merges back to main as version 1.1.1, and is forwarded down to develop." style="min-width:940px;max-width:100%;height:auto;font-family:Inter,system-ui,sans-serif">
+  <defs>
+    <marker id="bx" viewBox="0 0 8 8" refX="6.5" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6E6E85"/>
+    </marker>
+  </defs>
+
+  <!-- swimlanes -->
+  <rect x="0"  y="26"  width="1040" height="64" rx="10" fill="#0C1207"/>
+  <rect x="0"  y="98"  width="1040" height="64" rx="10" fill="#150A0E"/>
+  <rect x="0"  y="170" width="1040" height="64" rx="10" fill="#15110A"/>
+  <rect x="0"  y="242" width="1040" height="64" rx="10" fill="#100C18"/>
+  <rect x="0"  y="314" width="1040" height="64" rx="10" fill="#0E0E13"/>
+
+  <g font-family="ui-monospace,Menlo,monospace" font-size="14" font-weight="600">
+    <text x="18" y="63"  fill="#A3E635">main</text>
+    <text x="18" y="135" fill="#F0506E">hotfix/*</text>
+    <text x="18" y="207" fill="#F5A524">release/*</text>
+    <text x="18" y="279" fill="#8B5CF6">develop</text>
+    <text x="18" y="351" fill="#6E6E85">feature/*</text>
+  </g>
+
+  <!-- main -->
+  <path d="M232,58 H1000" stroke="#A3E635" stroke-width="2" fill="none"/>
+  <!-- develop -->
+  <path d="M232,58 C232,140 168,180 168,274 H1000" stroke="#8B5CF6" stroke-width="2" fill="none"/>
+  <path d="M168,274 H1000" stroke="#8B5CF6" stroke-width="2" fill="none"/>
+
+  <!-- feature branches: down from develop, squashed back -->
+  <g stroke="#6E6E85" stroke-width="1.6" fill="none">
+    <path d="M258,274 C258,320 274,346 300,346 H340 C366,346 382,320 382,274"/>
+    <path d="M414,274 C414,320 430,346 456,346 H496 C522,346 538,320 538,274"/>
+  </g>
+
+  <!-- release/* cut from develop, fixes forwarded back down -->
+  <path d="M596,274 C596,232 604,202 640,202 H744" stroke="#F5A524" stroke-width="2" fill="none"/>
+  <path d="M676,202 V274" stroke="#F5A524" stroke-width="1.6" fill="none" marker-end="url(#bx)"/>
+  <path d="M712,202 V274" stroke="#F5A524" stroke-width="1.6" fill="none" marker-end="url(#bx)"/>
+  <!-- release PRs into main -->
+  <path d="M744,202 C784,202 784,58 812,58" stroke="#F5A524" stroke-width="2" fill="none"/>
+
+  <!-- hotfix: from main, back to main, forwarded to develop -->
+  <path d="M856,58 C888,58 888,130 900,130" stroke="#F0506E" stroke-width="2" fill="none"/>
+  <path d="M900,130 C930,130 918,58 940,58" stroke="#F0506E" stroke-width="2" fill="none"/>
+  <path d="M940,58 C972,90 960,220 952,274" stroke="#F0506E" stroke-width="1.6" fill="none" marker-end="url(#bx)"/>
+
+  <!-- commits -->
+  <g fill="#08080A" stroke-width="2.5">
+    <circle cx="232" cy="58"  r="6" stroke="#A3E635"/>
+    <circle cx="812" cy="58"  r="6" stroke="#A3E635"/>
+    <circle cx="940" cy="58"  r="6" stroke="#A3E635"/>
+    <circle cx="900" cy="130" r="6" stroke="#F0506E"/>
+    <circle cx="640" cy="202" r="6" stroke="#F5A524"/>
+    <circle cx="676" cy="202" r="6" stroke="#F5A524"/>
+    <circle cx="712" cy="202" r="6" stroke="#F5A524"/>
+    <circle cx="168" cy="274" r="6" stroke="#8B5CF6"/>
+    <circle cx="382" cy="274" r="6" stroke="#8B5CF6"/>
+    <circle cx="538" cy="274" r="6" stroke="#8B5CF6"/>
+    <circle cx="676" cy="274" r="6" stroke="#8B5CF6"/>
+    <circle cx="712" cy="274" r="6" stroke="#8B5CF6"/>
+    <circle cx="952" cy="274" r="6" stroke="#8B5CF6"/>
+    <circle cx="300" cy="346" r="5.5" stroke="#6E6E85"/>
+    <circle cx="340" cy="346" r="5.5" stroke="#6E6E85"/>
+    <circle cx="456" cy="346" r="5.5" stroke="#6E6E85"/>
+    <circle cx="496" cy="346" r="5.5" stroke="#6E6E85"/>
+  </g>
+
+  <!-- tags -->
+  <g>
+    <rect x="200" y="2" width="64" height="20" rx="10" fill="#141C0A" stroke="#3E5C18"/>
+    <text x="232" y="16" fill="#A3E635" font-size="11.5" font-family="ui-monospace,Menlo,monospace" text-anchor="middle">v1.0</text>
+    <path d="M232,22 V50" stroke="#3E5C18" stroke-width="1" stroke-dasharray="2 3"/>
+
+    <rect x="780" y="2" width="64" height="20" rx="10" fill="#141C0A" stroke="#3E5C18"/>
+    <text x="812" y="16" fill="#A3E635" font-size="11.5" font-family="ui-monospace,Menlo,monospace" text-anchor="middle">v1.1</text>
+    <path d="M812,22 V50" stroke="#3E5C18" stroke-width="1" stroke-dasharray="2 3"/>
+
+    <rect x="904" y="2" width="72" height="20" rx="10" fill="#141C0A" stroke="#3E5C18"/>
+    <text x="940" y="16" fill="#A3E635" font-size="11.5" font-family="ui-monospace,Menlo,monospace" text-anchor="middle">v1.1.1</text>
+    <path d="M940,22 V50" stroke="#3E5C18" stroke-width="1" stroke-dasharray="2 3"/>
+  </g>
+
+  <!-- edge labels: what each line means -->
+  <g font-size="11.5" fill="#8B8BA0">
+    <text x="300" y="378">feature branches, squashed back into develop</text>
+    <text x="560" y="250" text-anchor="end">cut</text>
+    <text x="640" y="188">candidate fixes only</text>
+    <text x="736" y="250">every commit, forwarded</text>
+    <text x="748" y="112" text-anchor="end">when ready · PR to main</text>
+    <text x="846" y="100" text-anchor="end">hotfix</text>
+    <text x="900" y="164" text-anchor="middle">verified on its own PR</text>
+  </g>
+</svg>
+</div>
+
+<figcaption><b>The two rules the picture is here to make obvious.</b> A release branch takes <b>candidate fixes only</b> from the moment it is cut &mdash; that is the entire point of cutting it, and the rule most often bent. And <b>every commit on it is forwarded back down to <code>develop</code></b>, or a fix made during stabilization is missing from the next version and reappears as a regression. The hotfix lane exists for the same reason in reverse: branching from <code>main</code> rather than <code>develop</code> is what stops it picking up whatever is half-finished. Which channel each branch publishes, and where it runs, is in the table below.</figcaption>
+</figure>
 
 <div class="scroll"><table>
 <thead><tr><th>Branch</th><th>Environment</th><th>Channel</th><th>Rule</th></tr></thead>

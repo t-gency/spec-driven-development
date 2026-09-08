@@ -160,3 +160,9 @@ figcaption b{color:var(--tx2)}
   .who{text-align:left;padding-top:0}
   .sig{grid-column:1}
 }
+
+/* ---------- brand ---------- */
+.brand{display:block;text-decoration:none;margin-bottom:2px}
+.brand img{display:block;width:120px;height:auto;margin:0 0 8px}
+.brand span{display:block;font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--tx)}
+.brand:hover span{color:var(--green)}

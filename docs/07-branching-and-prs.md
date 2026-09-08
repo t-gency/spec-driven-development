@@ -3,18 +3,42 @@
 Four long-lived branches, each bound to an environment and a publish channel. Feature work happens
 off `develop` and comes back squashed.
 
+```mermaid
+gitGraph
+    commit id: "1.0" tag: "v1.0"
+    branch develop
+    checkout develop
+    branch feature/a
+    commit
+    commit
+    checkout develop
+    merge feature/a
+    branch feature/b
+    commit
+    commit
+    checkout develop
+    merge feature/b
+    branch release/1.1
+    checkout release/1.1
+    commit id: "candidate fix"
+    commit id: "candidate fix "
+    checkout develop
+    merge release/1.1 id: "forwarded"
+    checkout main
+    merge release/1.1 tag: "v1.1"
+    branch hotfix/x
+    commit id: "hotfix"
+    checkout main
+    merge hotfix/x tag: "v1.1.1"
+    checkout develop
+    merge hotfix/x id: "forwarded "
 ```
-                    v1.0                      v1.1        v1.1.1
-main       ──────────●─────────────────────────●────────────●────────   staging · release
-                     │                         ↑            ↑
-hotfix/*             │                         │            ●          straight to staging
-                     │                         │           ╱
-release/*            │              ●───●───●──┘          ╱            qa · rc
-                     │             ╱    │   │            ╱
-develop    ──────────●────●────●──┴─────●───●───────────●──────────     dev · dev
-                      ╲  ╱ ╲  ╱
-feature/*              ●●   ●●                                          PR CI and local only
-```
+
+Read the graph for two rules rather than for the shape. **A release branch takes candidate fixes
+only** from the moment it is cut. **Every commit on it is forwarded back down to `develop`** — or a
+fix made during stabilization is missing from the next version and reappears as a regression. The
+hotfix lane exists for the same reason in reverse: branching from `main` rather than `develop` is
+what stops it picking up whatever is half-finished.
 
 | Branch | Environment | Channel | Rule |
 |---|---|---|---|
