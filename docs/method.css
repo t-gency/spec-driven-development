@@ -162,7 +162,6 @@ figcaption b{color:var(--tx2)}
 }
 
 /* ---------- brand ---------- */
-.brand{display:block;text-decoration:none;margin-bottom:2px}
-.brand img{display:block;width:120px;height:auto;margin:0 0 8px}
-.brand span{display:block;font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--tx)}
-.brand:hover span{color:var(--green)}
+.brand{display:block;text-decoration:none;margin:0 0 4px}
+.brand img{display:block;width:120px;height:auto}
+.brand:hover{opacity:.75}
